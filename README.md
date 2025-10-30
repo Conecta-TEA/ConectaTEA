@@ -1,77 +1,125 @@
 # 🧩 ConectaTEA - Plataforma de Apoio para Famílias
 
-> Plataforma completa em PHP/HTML/CSS/JS para apoiar famílias com filhos no espectro autista, oferecendo exercícios personalizados, jogos educativos, videochamadas com especialistas e suporte emocional.
+> Plataforma completa em Node.js/HTML/CSS/JS para apoiar famílias com filhos no espectro autista, oferecendo recursos educacionais, agendamento de consultas com especialistas, autenticação segura via OTP e gestão completa de perfis.
 
 ## ✨ Funcionalidades
 
 ### 🎯 Para Pais e Famílias
-- ✅ **CRUD Completo** de perfis de crianças (criar, editar, visualizar, deletar)
-- ✅ **Biblioteca de Exercícios** personalizados por nível e área
-- ✅ **Jogos Educativos** interativos em JavaScript
-- ✅ **Videochamadas** com especialistas via Jitsi Meet
-- ✅ **Agendamento** de consultas e sessões
-- ✅ **Suporte Emocional** com recursos e comunidade
-- ✅ **Dashboard** com estatísticas e progresso
-- ✅ **Sistema de Assinaturas** (Gratuito/Básico/Premium)
+- ✅ **Cadastro e Login** com autenticação OTP via email
+- ✅ **Agendamento de Consultas** com especialistas
+- ✅ **Gestão de Perfil** (CRUD completo)
+- ✅ **Recursos Educacionais** para apoio
+- ✅ **Atividades Terapêuticas** personalizadas
+- ✅ **Dashboard** com histórico de consultas
+
+### 👨‍⚕️ Para Especialistas
+- ✅ **Perfil Profissional** com especialidades
+- ✅ **Gerenciamento de Consultas** agendadas
+- ✅ **Histórico de Atendimentos**
+- ✅ **Comunicação com Pacientes**
 
 ### 🛠️ Tecnologias
-- **Backend**: PHP 8+ com SQLite (migração fácil para MySQL)
-- **Frontend**: HTML5, CSS3 (Design System customizado), JavaScript vanilla
-- **Autenticação**: Sessões seguras com password_hash
-- **Videochamadas**: Jitsi Meet (iframe)
-- **Pagamentos**: Stripe (pronto para integração)
+- **Backend**: Node.js 14+ com Express 4.18.2
+- **Banco de Dados**: MySQL 5.7+ com mysql2
+- **Autenticação**: JWT + OTP via email (Nodemailer)
+- **Segurança**: bcryptjs, sessões JWT, auditoria completa
+- **Frontend**: HTML5, CSS3, JavaScript vanilla, Font Awesome 6.4.0
 
 ## 🚀 Como Rodar
 
 ### Requisitos
-- PHP 8.0 ou superior
+- **Node.js** 14 ou superior
+- **MySQL** 5.7 ou superior
+- **Conta Gmail** para envio de emails OTP
 - Navegador moderno (Chrome, Firefox, Edge)
 
-### Instalação
+### Instalação do Backend
 
-1. **Clone o repositório**
+1. **Instalar dependências**
 ```powershell
-git clone https://github.com/Conecta-TEA/ConectaTEA.git
-cd ConectaTEA
+cd backend
+npm install
 ```
 
-2. **Inicie o servidor**
+2. **Configurar banco de dados**
+```sql
+CREATE DATABASE conectatea;
+```
+
 ```powershell
-php -S 127.0.0.1:8000 -t public
+mysql -u root -p conectatea < database.sql
 ```
 
-3. **Acesse no navegador**
-```
-http://127.0.0.1:8000
+3. **Configurar variáveis de ambiente**
+
+Edite o arquivo `backend/.env`:
+```env
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_NAME=conectatea
+JWT_SECRET=sua_chave_secreta_super_segura
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=seu-email@gmail.com
+EMAIL_PASSWORD=sua_senha_app_gmail
+FRONTEND_URL=http://localhost:5500
 ```
 
-O banco de dados SQLite será criado automaticamente em `data/database.sqlite` na primeira execução.
+**⚠️ Gmail App Password**: Acesse https://myaccount.google.com/apppasswords para gerar
+
+4. **Iniciar servidor backend**
+```powershell
+cd backend
+npm start
+```
+
+### Frontend
+
+1. **Abrir com Live Server**
+   - Instale a extensão Live Server no VS Code
+   - Clique com botão direito em `index.html`
+   - Selecione "Open with Live Server"
+   - Acesse: http://localhost:5500
 
 ## 📁 Estrutura do Projeto
 
 ```
 ConectaTEA/
-├── public/              # Arquivos públicos (raiz do servidor)
-│   ├── index.php        # Landing page
-│   ├── header.php       # Template header
-│   ├── footer.php       # Template footer
-│   ├── register.php     # Registro de usuário
-│   ├── login.php        # Login
-│   ├── dashboard.php    # Dashboard principal
-│   ├── children.php     # CRUD de crianças
-│   ├── exercises.php    # Biblioteca de exercícios
-│   ├── appointments.php # Agendamentos e chamadas
-│   ├── payments.php     # Assinaturas e pagamentos
-│   ├── css/
-│   │   └── style.css    # Design System completo
-│   └── js/
-│       └── app.js       # JavaScript principal
-├── src/                 # Código PHP backend
-│   ├── db.php          # Conexão e inicialização do banco
-│   └── auth.php        # Sistema de autenticação
-├── data/               # Banco de dados (criado automaticamente)
-│   └── database.sqlite
-└── README.md
+├── backend/                    # Backend Node.js
+│   ├── config/
+│   │   ├── database.js        # Conexão MySQL
+│   │   └── email.js           # Configuração Nodemailer
+│   ├── controllers/
+│   │   ├── authController.js  # Autenticação OTP
+│   │   ├── usuarioController.js # CRUD usuários
+│   │   └── consultaController.js # CRUD consultas
+│   ├── middleware/
+│   │   └── auth.js            # Verificação JWT
+│   ├── routes/
+│   │   ├── authRoutes.js      # Rotas de autenticação
+│   │   ├── usuarioRoutes.js   # Rotas de usuários
+│   │   └── consultaRoutes.js  # Rotas de consultas
+│   ├── utils/
+│   │   └── otp.js             # Geração de códigos
+│   ├── .env                   # Variáveis de ambiente
+│   ├── database.sql           # Schema do banco
+│   ├── package.json           # Dependências
+│   ├── server.js              # Servidor Express
+│   └── README.md              # Documentação da API
+│
+├── index.html                 # Página inicial
+├── especialistas.html         # Lista de especialistas
+├── consultas.html             # Agendamento
+├── recursos.html              # Recursos educacionais
+├── login.html                 # Login com OTP
+├── cadastro.html              # Cadastro de usuário
+├── styles.css                 # Estilos globais
+├── auth.css                   # Estilos de autenticação
+├── auth.js                    # Lógica de login/cadastro
+├── session.js                 # Gerenciamento de sessão
+└── README.md                  # Este arquivo
 ```
 
 ## 🎨 Identidade Visual
@@ -86,75 +134,132 @@ A plataforma possui um **Design System completo** com:
 
 ## 🔐 Segurança
 
-- ✅ Senhas com hash seguro (password_hash/BCrypt)
-- ✅ Sessões com httpOnly cookies
-- ✅ Prepared statements (proteção SQL injection)
-- ✅ Validação de entrada (client + server side)
-- ⚠️ **TODO**: Implementar CSRF tokens
-- ⚠️ **TODO**: Confirmação de email
-- ⚠️ **TODO**: Recuperação de senha
+- ✅ **Autenticação OTP** via email (sem senha no login)
+- ✅ **Senhas criptografadas** com bcryptjs (10 salt rounds)
+- ✅ **Tokens JWT** com expiração de 7 dias
+- ✅ **Códigos OTP** de uso único (10 minutos de validade)
+- ✅ **Prepared statements** (proteção SQL injection)
+- ✅ **Validação de sessão** em todas as requisições
+- ✅ **Auditoria completa** de ações no banco
+- ✅ **CORS configurado** para domínios permitidos
 
 ## 📊 Banco de Dados
 
-### Tabelas Principais
-- **users**: Pais, especialistas e administradores
-- **children**: Perfis das crianças
-- **exercises**: Biblioteca de exercícios
-- **appointments**: Agendamentos de videochamadas
+### Tabelas (8 no total)
+- **usuarios**: Contas de usuários (pacientes, especialistas, admin)
+- **otp_codes**: Códigos de verificação temporários
+- **especialistas**: Perfis profissionais com especialidades
+- **consultas**: Agendamentos e histórico de atendimentos
+- **recursos**: Biblioteca de conteúdo educacional
+- **atividades**: Atividades terapêuticas personalizadas
+- **sessoes**: Tokens JWT ativos
+- **auditoria**: Log completo de todas as ações
 
-## 🚢 Deploy / Hospedagem
+## � Sistema de Emails
 
-### Opções Recomendadas
+O sistema envia emails HTML estilizados para:
 
-1. **Shared Hosting (cPanel)**
-   - Hostinger, HostGator, Locaweb
-   - Suporte PHP nativo
-   - Banco MySQL incluído
+### 1. Verificação de Cadastro
+- **Assunto**: "Bem-vindo ao ConectaTEA - Verifique seu Email"
+- **Conteúdo**: Código de 6 dígitos para ativar conta
 
-2. **VPS / Cloud**
-   - DigitalOcean, Vultr, Linode
-   - Maior controle e performance
-   - Requer configuração manual
+### 2. Login com OTP
+- **Assunto**: "Seu Código de Acesso - ConectaTEA"
+- **Conteúdo**: Código de 6 dígitos para fazer login
 
-3. **PaaS (Platform as a Service)**
-   - Heroku, Railway, Render
-   - Deploy automático via Git
-   - Fácil escalabilidade
+### 3. Recuperação de Senha
+- **Assunto**: "Redefinir Senha - ConectaTEA"
+- **Conteúdo**: Código de 6 dígitos para criar nova senha
+
+Todos os emails seguem o design system da plataforma com gradientes roxo/rosa.
+
+## 🔌 API Endpoints
+
+### Autenticação
+- `POST /api/auth/cadastrar` - Criar nova conta
+- `POST /api/auth/verificar-email` - Verificar código de cadastro
+- `POST /api/auth/login/solicitar-otp` - Solicitar código de login
+- `POST /api/auth/login/verificar-otp` - Fazer login com OTP
+- `POST /api/auth/reenviar-otp` - Reenviar código
+- `POST /api/auth/logout` - Fazer logout (protegido)
+
+### Usuários
+- `GET /api/usuarios` - Listar usuários (admin)
+- `GET /api/usuarios/:id` - Buscar por ID
+- `PUT /api/usuarios/:id` - Atualizar perfil
+- `DELETE /api/usuarios/:id` - Deletar (admin)
+- `POST /api/usuarios/alterar-senha` - Alterar senha
+
+### Consultas
+- `POST /api/consultas` - Agendar consulta
+- `GET /api/consultas` - Listar minhas consultas
+- `GET /api/consultas/:id` - Detalhes da consulta
+- `PUT /api/consultas/:id` - Atualizar/reagendar
+- `PUT /api/consultas/:id/cancelar` - Cancelar consulta
+- `DELETE /api/consultas/:id` - Deletar (admin)
+
+Documentação completa em `backend/README.md`
+
+## 🚢 Deploy
+
+### Backend (Node.js)
+- **Heroku**: `git push heroku main`
+- **Railway**: Deploy automático via GitHub
+- **Render**: Deploy com MySQL gerenciado
+- **VPS**: PM2 + Nginx + MySQL
+
+### Frontend (Estático)
+- **Vercel**: Deploy gratuito
+- **Netlify**: CI/CD integrado
+- **GitHub Pages**: Apenas frontend estático
+- **Cloudflare Pages**: Performance global
 
 ### Checklist de Deploy
-- [ ] Migrar SQLite para MySQL/MariaDB
-- [ ] Configurar variáveis de ambiente (.env)
+- [ ] Configurar variáveis de ambiente (.env) no servidor
 - [ ] Ativar HTTPS (SSL/TLS)
-- [ ] Configurar backups automáticos
-- [ ] Implementar rate limiting
-- [ ] Adicionar monitoring (logs, erros)
-- [ ] Integrar Stripe (webhooks)
-- [ ] Configurar SMTP para emails
+- [ ] Configurar backups automáticos do MySQL
+- [ ] Implementar rate limiting nas rotas
+- [ ] Adicionar monitoring (logs, uptime)
+- [ ] Configurar domínio personalizado
 - [ ] Otimizar assets (minify CSS/JS)
 - [ ] Configurar CDN para static files
+- [ ] Testar envio de emails em produção
+- [ ] Alterar senha do usuário admin padrão
+
+## 👤 Usuário Admin Padrão
+
+Criado automaticamente no banco:
+- **Email**: admin@conectatea.com.br
+- **Senha**: admin123
+- **Tipo**: admin
+
+⚠️ **IMPORTANTE**: Altere a senha após primeiro acesso!
 
 ## 🎯 Próximos Passos
 
-### Curto Prazo
-- [ ] Implementar recuperação de senha
-- [ ] Upload de fotos de perfil
-- [ ] Edição inline de registros
-- [ ] Sistema de notificações push
+### Curto Prazo (em desenvolvimento)
+- [ ] Integrar páginas frontend com API backend
+- [ ] CRUD de Especialistas (controller + rotas)
+- [ ] CRUD de Recursos (controller + rotas)
+- [ ] Upload de fotos de perfil (multer)
+- [ ] Sistema de notificações por email
 - [ ] Filtros e busca avançada
 
 ### Médio Prazo
-- [ ] Gamificação com badges e conquistas
-- [ ] Analytics de progresso (gráficos)
-- [ ] Chat em tempo real (pais + especialistas)
+- [ ] Dashboard com estatísticas (gráficos)
+- [ ] Chat em tempo real (Socket.io)
+- [ ] Sistema de avaliações de especialistas
+- [ ] Calendário de disponibilidade
 - [ ] Aplicativo PWA (Progressive Web App)
-- [ ] Integração com APIs de telemedicina
+- [ ] Integração com Google Calendar
 
 ### Longo Prazo
 - [ ] App mobile nativo (React Native / Flutter)
 - [ ] IA para recomendações personalizadas
-- [ ] Integração com SUS e planos de saúde
-- [ ] Marketplace de conteúdo premium
+- [ ] Videochamadas integradas (WebRTC/Jitsi)
+- [ ] Gamificação com badges e conquistas
 - [ ] Multi-idioma (i18n)
+- [ ] Marketplace de conteúdo premium
 
 ## 📄 Licença
 

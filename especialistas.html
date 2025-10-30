@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especialistas - Apoio TEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Apoio TEA</h1>
+                    <span>Suporte para famílias</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="especialistas.html" class="active"><i class="fas fa-user-doctor"></i> Especialistas</a></li>
+                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Minhas Consultas</a></li>
+                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                </ul>
+            </nav>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">Matheus Lucindo</span>
+                    <span class="user-greeting">Bem-vindo(a)</span>
+                </div>
+                <button class="btn-sair">Sair</button>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Nossos Especialistas Section -->
+    <section class="especialistas-section">
+        <div class="container">
+            <h2 class="section-title">Nossos Especialistas</h2>
+            <p class="section-subtitle">Profissionais qualificados prontos para apoiar sua família</p>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar por nome ou descrição..." id="searchInput">
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="terapeutas">Terapeutas</button>
+                <button class="filter-btn" data-filter="psicologos">Psicólogos</button>
+                <button class="filter-btn" data-filter="fonoaudiologos">Fonoaudiólogos</button>
+                <button class="filter-btn" data-filter="t-ocupacionais">T. Ocupacionais</button>
+                <button class="filter-btn" data-filter="analistas">Analistas</button>
+            </div>
+
+            <!-- Especialistas Grid -->
+            <div class="especialistas-grid">
+                <!-- Especialista 1 -->
+                <div class="especialista-card" data-category="analistas">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop" alt="Dr. Carlos Mendes">
+                        <span class="badge badge-pink">Analista Comportamental</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dr. Carlos Mendes</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> BCBA - Board Certified Behavior Analyst</p>
+                        <p class="descricao">Analista comportamental certificado com vasta experiência em intervenções ABA. Especializado em desenvolvimento de habilidades sociais e...</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>5.0</strong>
+                                <span class="experience">10 anos de experiência</span>
+                            </div>
+                            <div class="sessions">920+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dr. Carlos Mendes')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Especialista 2 -->
+                <div class="especialista-card" data-category="psicologos">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop" alt="Dra. Ana Paula Silva">
+                        <span class="badge badge-blue">Psicólogo</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dra. Ana Paula Silva</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> CRP 06/123456 - Mestre em Psicologia Clínica</p>
+                        <p class="descricao">Psicóloga especializada em apoio a pais e famílias de crianças com TEA. Foco em saúde mental parental, gestão de estresse e...</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>4.9</strong>
+                                <span class="experience">12 anos de experiência</span>
+                            </div>
+                            <div class="sessions">850+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dra. Ana Paula Silva')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Especialista 3 -->
+                <div class="especialista-card" data-category="fonoaudiologos">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Dra. Juliana Oliveira">
+                        <span class="badge badge-green">Fonoaudiólogo</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dra. Juliana Oliveira</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> CRFa 2-12345 - Especialista em Linguagem</p>
+                        <p class="descricao">Fonoaudióloga especializada em comunicação alternativa e desenvolvimento da linguagem em crianças com TEA.</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>4.9</strong>
+                                <span class="experience">15 anos de experiência</span>
+                            </div>
+                            <div class="sessions">1200+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dra. Juliana Oliveira')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Especialista 4 -->
+                <div class="especialista-card" data-category="t-ocupacionais">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop" alt="Dr. Roberto Costa">
+                        <span class="badge badge-purple">Terapeuta Ocupacional</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dr. Roberto Costa</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> CREFITO 3-98765 - Terapeuta Ocupacional</p>
+                        <p class="descricao">Terapeuta ocupacional com foco em integração sensorial e desenvolvimento de autonomia em atividades diárias.</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>5.0</strong>
+                                <span class="experience">8 anos de experiência</span>
+                            </div>
+                            <div class="sessions">680+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dr. Roberto Costa')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Especialista 5 -->
+                <div class="especialista-card" data-category="psicologos">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=400&fit=crop" alt="Dra. Fernanda Souza">
+                        <span class="badge badge-blue">Psicólogo</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dra. Fernanda Souza</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> CRP 01/54321 - Especialista em Neuropsicologia</p>
+                        <p class="descricao">Neuropsicóloga especializada em avaliação e intervenção cognitiva em crianças e adolescentes com TEA.</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>4.8</strong>
+                                <span class="experience">11 anos de experiência</span>
+                            </div>
+                            <div class="sessions">750+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dra. Fernanda Souza')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Especialista 6 -->
+                <div class="especialista-card" data-category="terapeutas">
+                    <div class="especialista-image">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop" alt="Dr. Marcos Almeida">
+                        <span class="badge badge-purple">Terapeuta ABA</span>
+                    </div>
+                    <div class="especialista-info">
+                        <h3>Dr. Marcos Almeida</h3>
+                        <p class="credencial"><i class="fas fa-graduation-cap"></i> RBT Certificado - Terapeuta ABA</p>
+                        <p class="descricao">Terapeuta ABA certificado com experiência em programas de ensino estruturado e manejo comportamental.</p>
+                        <div class="especialista-stats">
+                            <div class="rating">
+                                <i class="fas fa-star star"></i>
+                                <strong>4.9</strong>
+                                <span class="experience">7 anos de experiência</span>
+                            </div>
+                            <div class="sessions">620+ sessões realizadas</div>
+                        </div>
+                        <button class="btn-agendar" onclick="openModal('Dr. Marcos Almeida')">
+                            <i class="fas fa-calendar"></i> Agendar Consulta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Agendamento -->
+    <div class="modal-overlay" id="modalAgendamento">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i> Fechar
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h2>Agendar Consulta</h2>
+                    <p class="modal-subtitle">Com <span id="especialistaNome"></span></p>
+                </div>
+            </div>
+
+            <form class="form-agendamento" onsubmit="submitAgendamento(event)">
+                <div class="form-group">
+                    <label for="tipoAtendimento">
+                        <i class="fas fa-clipboard-list"></i> Tipo de Atendimento *
+                    </label>
+                    <select id="tipoAtendimento" required>
+                        <option value="">Selecione o tipo de atendimento</option>
+                        <option value="primeira">🌟 Primeira Consulta</option>
+                        <option value="retorno">🔄 Retorno</option>
+                        <option value="avaliacao">📋 Avaliação</option>
+                        <option value="acompanhamento">👥 Acompanhamento</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataConsulta">
+                            <i class="fas fa-calendar"></i> Data *
+                        </label>
+                        <input type="date" id="dataConsulta" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horarioConsulta">
+                            <i class="fas fa-clock"></i> Horário *
+                        </label>
+                        <select id="horarioConsulta" required>
+                            <option value="">Selecione o horário</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">
+                        <i class="fas fa-comment-dots"></i> Observações
+                    </label>
+                    <textarea id="observacoes" rows="4" placeholder="Compartilhe informações relevantes para a consulta..."></textarea>
+                </div>
+
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>📌 Informações Importantes</strong>
+                        <ul>
+                            <li>🎥 Consulta por videochamada segura</li>
+                            <li>📧 Link de acesso enviado por email</li>
+                            <li>⏱️ Duração: 50 minutos</li>
+                            <li>⚠️ Cancelamento com 24h de antecedência</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar-modal" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn-confirmar-modal">
+                        <i class="fas fa-check-circle"></i> Confirmar Agendamento
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

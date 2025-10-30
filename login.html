@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ConectaTEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h1>ConectaTEA</h1>
+                <p>Apoio para famílias</p>
+            </div>
+
+            <!-- Tela 1: Solicitar código -->
+            <div id="telaEmail" class="auth-form active">
+                <h2>Entrar na sua conta</h2>
+                <p class="subtitle">Digite seu email para receber o código de acesso</p>
+
+                <form id="formSolicitarOTP">
+                    <div class="form-group">
+                        <label for="emailLogin">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                        <input 
+                            type="email" 
+                            id="emailLogin" 
+                            placeholder="seu-email@exemplo.com" 
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-paper-plane"></i> Enviar Código
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+                </div>
+            </div>
+
+            <!-- Tela 2: Verificar código OTP -->
+            <div id="telaOTP" class="auth-form">
+                <button class="btn-voltar" onclick="voltarParaEmail()">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+
+                <h2>Verificar Código</h2>
+                <p class="subtitle">Digite o código enviado para <strong id="emailExibicao"></strong></p>
+
+                <form id="formVerificarOTP">
+                    <div class="form-group">
+                        <label for="codigoOTP">
+                            <i class="fas fa-key"></i> Código de 6 dígitos
+                        </label>
+                        <input 
+                            type="text" 
+                            id="codigoOTP" 
+                            placeholder="000000" 
+                            maxlength="6"
+                            pattern="[0-9]{6}"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                </form>
+
+                <div class="resend-section">
+                    <p>Não recebeu o código?</p>
+                    <button class="btn-link" onclick="reenviarOTP()">
+                        <i class="fas fa-redo"></i> Reenviar código
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading overlay -->
+            <div id="loadingOverlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Processando...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Verificar se já está logado
+        if (localStorage.getItem('token')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

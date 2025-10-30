@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Consultas - Apoio TEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Apoio TEA</h1>
+                    <span>Suporte para famílias</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="especialistas.html"><i class="fas fa-user-doctor"></i> Especialistas</a></li>
+                    <li><a href="consultas.html" class="active"><i class="fas fa-calendar-check"></i> Minhas Consultas</a></li>
+                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                </ul>
+            </nav>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">Matheus Lucindo</span>
+                    <span class="user-greeting">Bem-vindo(a)</span>
+                </div>
+                <button class="btn-sair">Sair</button>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Minhas Consultas Section -->
+    <section class="consultas-section">
+        <div class="container">
+            <h2 class="section-title-page">Minhas Consultas</h2>
+            <p class="section-subtitle">Gerencie seus agendamentos e acompanhe suas sessões</p>
+
+            <!-- Tabs -->
+            <div class="consultas-tabs">
+                <button class="tab-btn-consulta active" data-tab="agendadas">Agendadas</button>
+                <button class="tab-btn-consulta" data-tab="concluidas">Concluídas</button>
+                <button class="tab-btn-consulta" data-tab="canceladas">Canceladas</button>
+            </div>
+
+            <!-- Próximas Consultas -->
+            <div class="tab-content-consulta active" id="agendadas">
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <i class="fas fa-calendar-alt empty-icon"></i>
+                    <h3>Nenhuma consulta agendada</h3>
+                    <p>Agende sua primeira consulta com um especialista</p>
+                    <a href="especialistas.html" class="btn-empty-state">
+                        <i class="fas fa-search"></i> Buscar Especialistas
+                    </a>
+                </div>
+            </div>
+
+            <!-- Histórico -->
+            <div class="tab-content-consulta" id="concluidas">
+                <div class="consultas-grid">
+                    <div class="consulta-card historico">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-check"></i>
+                                <div>
+                                    <strong>Segunda-feira, 23 Out</strong>
+                                    <span>14:00 - 15:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-concluida">Concluída</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100&h=100&fit=crop" alt="Dra. Ana Paula Silva">
+                                <div>
+                                    <h4>Dra. Ana Paula Silva</h4>
+                                    <p>Psicóloga - CRP 06/123456</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Sessão de acompanhamento</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-relatorio"><i class="fas fa-file-alt"></i> Ver Relatório</button>
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canceladas -->
+            <div class="tab-content-consulta" id="canceladas">
+                <div class="consultas-grid">
+                    <div class="consulta-card proxima">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-day"></i>
+                                <div>
+                                    <strong>Segunda-feira, 30 Out</strong>
+                                    <span>14:00 - 15:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-confirmada">Confirmada</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100&h=100&fit=crop" alt="Dra. Ana Paula Silva">
+                                <div>
+                                    <h4>Dra. Ana Paula Silva</h4>
+                                    <p>Psicóloga - CRP 06/123456</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Sessão de acompanhamento</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-entrar"><i class="fas fa-video"></i> Entrar na Sala</button>
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                            <button class="btn-action btn-cancelar"><i class="fas fa-times"></i> Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="consulta-card proxima">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-day"></i>
+                                <div>
+                                    <strong>Quarta-feira, 1 Nov</strong>
+                                    <span>10:00 - 11:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-confirmada">Confirmada</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Dra. Juliana Oliveira">
+                                <div>
+                                    <h4>Dra. Juliana Oliveira</h4>
+                                    <p>Fonoaudióloga - CRFa 2-12345</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Avaliação de linguagem</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                            <button class="btn-action btn-cancelar"><i class="fas fa-times"></i> Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="consulta-card proxima">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-day"></i>
+                                <div>
+                                    <strong>Sexta-feira, 3 Nov</strong>
+                                    <span>15:30 - 16:30</span>
+                                </div>
+                            </div>
+                            <span class="status status-pendente">Pendente</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop" alt="Dr. Carlos Mendes">
+                                <div>
+                                    <h4>Dr. Carlos Mendes</h4>
+                                    <p>Analista Comportamental - BCBA</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Primeira sessão ABA</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-confirmar"><i class="fas fa-check"></i> Confirmar</button>
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                            <button class="btn-action btn-cancelar"><i class="fas fa-times"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico -->
+            <div class="tab-content-consulta" id="historico">
+                <div class="consultas-grid">
+                    <div class="consulta-card historico">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-check"></i>
+                                <div>
+                                    <strong>Segunda-feira, 23 Out</strong>
+                                    <span>14:00 - 15:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-concluida">Concluída</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100&h=100&fit=crop" alt="Dra. Ana Paula Silva">
+                                <div>
+                                    <h4>Dra. Ana Paula Silva</h4>
+                                    <p>Psicóloga - CRP 06/123456</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Sessão de acompanhamento</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-relatorio"><i class="fas fa-file-alt"></i> Ver Relatório</button>
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                        </div>
+                    </div>
+
+                    <div class="consulta-card historico">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-calendar-check"></i>
+                                <div>
+                                    <strong>Quinta-feira, 19 Out</strong>
+                                    <span>10:00 - 11:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-concluida">Concluída</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop" alt="Dr. Roberto Costa">
+                                <div>
+                                    <h4>Dr. Roberto Costa</h4>
+                                    <p>Terapeuta Ocupacional - CREFITO 3-98765</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-sticky-note"></i> Avaliação sensorial</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-relatorio"><i class="fas fa-file-alt"></i> Ver Relatório</button>
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                        </div>
+                    </div>
+
+                    <div class="consulta-card historico">
+                        <div class="consulta-header">
+                            <div class="consulta-data">
+                                <i class="fas fa-ban"></i>
+                                <div>
+                                    <strong>Segunda-feira, 16 Out</strong>
+                                    <span>15:00 - 16:00</span>
+                                </div>
+                            </div>
+                            <span class="status status-cancelada">Cancelada</span>
+                        </div>
+                        <div class="consulta-body">
+                            <div class="especialista-mini">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Dra. Juliana Oliveira">
+                                <div>
+                                    <h4>Dra. Juliana Oliveira</h4>
+                                    <p>Fonoaudióloga - CRFa 2-12345</p>
+                                </div>
+                            </div>
+                            <div class="consulta-info">
+                                <p><i class="fas fa-video"></i> Consulta Online</p>
+                                <p><i class="fas fa-exclamation-circle"></i> Cancelada pelo paciente</p>
+                            </div>
+                        </div>
+                        <div class="consulta-actions">
+                            <button class="btn-action btn-reagendar"><i class="fas fa-calendar-alt"></i> Reagendar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
