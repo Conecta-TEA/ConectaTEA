@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - ConectaTEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="modal-confirmacao.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>ConectaTEA</h1>
+                    <span>Suporte para famílias</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="especialistas.html"><i class="fas fa-user-doctor"></i> Especialistas</a></li>
+                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Minhas Consultas</a></li>
+                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                </ul>
+            </nav>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name" id="headerUserName">Usuário</span>
+                    <span class="user-greeting">Bem-vindo(a)</span>
+                </div>
+                <button class="btn-sair" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Perfil Section -->
+    <section class="perfil-section">
+        <div class="container">
+            <h2 class="section-title">Meu Perfil</h2>
+            
+            <div class="perfil-container">
+                <!-- Sidebar com foto -->
+                <div class="perfil-sidebar">
+                    <div class="perfil-avatar-container">
+                        <div class="perfil-avatar" id="perfilAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <button class="btn-change-photo">
+                            <i class="fas fa-camera"></i> Alterar Foto
+                        </button>
+                    </div>
+                    
+                    <div class="perfil-stats">
+                        <div class="stat-box">
+                            <i class="fas fa-calendar-check"></i>
+                            <span class="stat-number" id="totalConsultas">0</span>
+                            <span class="stat-label">Consultas</span>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-clock"></i>
+                            <span class="stat-number" id="diasCadastro">0</span>
+                            <span class="stat-label">Dias conosco</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo do perfil -->
+                <div class="perfil-content">
+                    <!-- Informações Pessoais -->
+                    <div class="perfil-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-circle"></i> Informações Pessoais</h3>
+                            <button class="btn-edit" onclick="toggleEdit('pessoais')">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                        </div>
+                        <form id="formPessoais" class="perfil-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Nome Completo</label>
+                                    <input type="text" id="nome" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope"></i> Email</label>
+                                    <input type="email" id="email" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone"></i> Telefone</label>
+                                    <input type="tel" id="telefone" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-birthday-cake"></i> Data de Nascimento</label>
+                                    <input type="date" id="dataNascimento" disabled>
+                                </div>
+                            </div>
+                            <div class="form-actions" style="display: none;">
+                                <button type="button" class="btn-cancelar" onclick="cancelEdit('pessoais')">Cancelar</button>
+                                <button type="submit" class="btn-salvar">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Segurança -->
+                    <div class="perfil-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-shield-alt"></i> Segurança</h3>
+                        </div>
+                        <form id="formSenha" class="perfil-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-lock"></i> Senha Atual</label>
+                                <input type="password" id="senhaAtual" placeholder="Digite sua senha atual">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-key"></i> Nova Senha</label>
+                                    <input type="password" id="novaSenha" placeholder="Mínimo 6 caracteres">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-check-circle"></i> Confirmar Nova Senha</label>
+                                    <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-salvar">
+                                <i class="fas fa-save"></i> Atualizar Senha
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Preferências -->
+                    <div class="perfil-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cog"></i> Preferências</h3>
+                        </div>
+                        <div class="preferencias-list">
+                            <div class="preferencia-item">
+                                <div>
+                                    <i class="fas fa-bell"></i>
+                                    <span>Notificações por Email</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifEmail" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="preferencia-item">
+                                <div>
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Notificações Push</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifPush" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="preferencia-item">
+                                <div>
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Lembrete de Consultas</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="lembreteConsultas" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conta -->
+                    <div class="perfil-card danger-zone">
+                        <div class="card-header">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h3>
+                        </div>
+                        <div class="danger-actions">
+                            <button class="btn-danger" onclick="desativarConta()">
+                                <i class="fas fa-user-slash"></i> Desativar Conta
+                            </button>
+                            <button class="btn-danger" onclick="excluirConta()">
+                                <i class="fas fa-trash-alt"></i> Excluir Conta Permanentemente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script src="perfil.js"></script>
+</body>
+</html>

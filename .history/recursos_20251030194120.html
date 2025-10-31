@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Apoio TEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="acessibilidade.css">
+    <link rel="stylesheet" href="modal-confirmacao.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Apoio TEA</h1>
+                    <span>Suporte para famílias</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="especialistas.html"><i class="fas fa-user-doctor"></i> Especialistas</a></li>
+                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Minhas Consultas</a></li>
+                    <li><a href="recursos.html" class="active"><i class="fas fa-book"></i> Recursos</a></li>
+                </ul>
+            </nav>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name" id="headerUserName">Usuário</span>
+                    <span class="user-greeting">Bem-vindo(a)</span>
+                </div>
+                <a href="perfil.html" class="btn-perfil" title="Meu Perfil">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                <button class="btn-sair" onclick="logout()">Sair</button>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Recursos Section -->
+    <section class="recursos-page-section">
+        <div class="container">
+            <h2 class="section-title">Recursos Educacionais</h2>
+            <p class="section-subtitle">Materiais, guias e atividades para apoiar o desenvolvimento</p>
+
+            <!-- Search and Filter -->
+            <div class="recursos-controls">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar recursos..." id="searchRecursos">
+                </div>
+                <div class="filter-recursos">
+                    <select id="categoriaFilter">
+                        <option value="todos">Todas as Categorias</option>
+                        <option value="guias">Guias e Manuais</option>
+                        <option value="atividades">Atividades</option>
+                        <option value="videos">Vídeos</option>
+                        <option value="artigos">Artigos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Recursos Grid -->
+            <div class="recursos-page-grid">
+                <!-- Recurso 1 -->
+                <div class="recurso-page-card" data-categoria="guias">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Guia Completo</span>
+                        <h3>Manual de Comunicação Alternativa</h3>
+                        <p>Guia prático para implementar sistemas de comunicação alternativa (PECS, CAA) em casa e na escola.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF - 45 páginas</span>
+                            <span><i class="fas fa-download"></i> 2.3k downloads</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-download"></i> Baixar Recurso</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 2 -->
+                <div class="recurso-page-card" data-categoria="atividades">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Atividades</span>
+                        <h3>Kit de Atividades Sensoriais</h3>
+                        <p>Coleção de 50+ atividades sensoriais para estimular o desenvolvimento sensorial e motor.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF - 30 páginas</span>
+                            <span><i class="fas fa-download"></i> 3.1k downloads</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-download"></i> Baixar Recurso</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 3 -->
+                <div class="recurso-page-card" data-categoria="videos">
+                    <div class="recurso-thumbnail video">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Vídeo Aula</span>
+                        <h3>Introdução ao Método ABA</h3>
+                        <p>Série de vídeos explicando os fundamentos da Análise do Comportamento Aplicada.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-video"></i> 5 vídeos - 2h30min</span>
+                            <span><i class="fas fa-eye"></i> 8.5k visualizações</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-play"></i> Assistir Agora</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 4 -->
+                <div class="recurso-page-card" data-categoria="artigos">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Artigo</span>
+                        <h3>Estratégias para Gestão de Crises</h3>
+                        <p>Artigo detalhado sobre como identificar gatilhos e gerenciar momentos de crise de forma eficaz.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-clock"></i> Leitura: 15 min</span>
+                            <span><i class="fas fa-eye"></i> 5.2k leituras</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-book-reader"></i> Ler Artigo</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 5 -->
+                <div class="recurso-page-card" data-categoria="guias">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Guia Prático</span>
+                        <h3>Criando Rotinas Visuais Eficazes</h3>
+                        <p>Passo a passo para criar e implementar rotinas visuais que ajudam na previsibilidade do dia.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF - 20 páginas</span>
+                            <span><i class="fas fa-download"></i> 4.7k downloads</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-download"></i> Baixar Recurso</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 6 -->
+                <div class="recurso-page-card" data-categoria="atividades">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Jogos Educativos</span>
+                        <h3>Jogos para Desenvolvimento Social</h3>
+                        <p>Coleção de jogos e brincadeiras que estimulam habilidades sociais e interação.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF - 35 páginas</span>
+                            <span><i class="fas fa-download"></i> 6.1k downloads</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-download"></i> Baixar Recurso</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 7 -->
+                <div class="recurso-page-card" data-categoria="videos">
+                    <div class="recurso-thumbnail video">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Webinar</span>
+                        <h3>Inclusão Escolar: Desafios e Soluções</h3>
+                        <p>Webinar com especialistas discutindo estratégias para inclusão escolar bem-sucedida.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-video"></i> 1h45min</span>
+                            <span><i class="fas fa-eye"></i> 12k visualizações</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-play"></i> Assistir Agora</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 8 -->
+                <div class="recurso-page-card" data-categoria="artigos">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Artigo Científico</span>
+                        <h3>Desenvolvimento Cognitivo no TEA</h3>
+                        <p>Estudo sobre padrões de desenvolvimento cognitivo e intervenções baseadas em evidências.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-clock"></i> Leitura: 25 min</span>
+                            <span><i class="fas fa-eye"></i> 3.8k leituras</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-book-reader"></i> Ler Artigo</button>
+                    </div>
+                </div>
+
+                <!-- Recurso 9 -->
+                <div class="recurso-page-card" data-categoria="guias">
+                    <div class="recurso-thumbnail">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="recurso-content">
+                        <span class="recurso-categoria">Guia Nutricional</span>
+                        <h3>Alimentação e Seletividade Alimentar</h3>
+                        <p>Estratégias práticas para lidar com seletividade alimentar e ampliar o repertório alimentar.</p>
+                        <div class="recurso-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF - 28 páginas</span>
+                            <span><i class="fas fa-download"></i> 5.5k downloads</span>
+                        </div>
+                        <button class="btn-recurso"><i class="fas fa-download"></i> Baixar Recurso</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

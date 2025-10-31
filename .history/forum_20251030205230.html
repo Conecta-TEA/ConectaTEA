@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fórum - ConectaTEA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="forum.css">
+    <link rel="stylesheet" href="acessibilidade.css">
+    <link rel="stylesheet" href="modal-confirmacao.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>ConectaTEA</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Consultas</a></li>
+                    <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="especialistas.html"><i class="fas fa-user-md"></i> Especialistas</a></li>
+                    <li><a href="forum.html" class="active"><i class="fas fa-users"></i> Fórum</a></li>
+                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                    <li><a href="#" class="btn-profile" id="btnProfile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="headerUserName">Usuário</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Forum Section -->
+    <section class="forum-section">
+        <div class="forum-container">
+            <!-- Sidebar Categorias -->
+            <aside class="forum-sidebar">
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-layer-group"></i> Categorias</h3>
+                    <ul class="categories-list">
+                        <li>
+                            <a href="#" class="category-item active" data-category="">
+                                <i class="fas fa-th-large"></i>
+                                <span>Todas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Dicas">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Dicas e Orientações</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Duvidas">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Dúvidas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Relatos">
+                                <i class="fas fa-heart"></i>
+                                <span>Relatos e Experiências</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Recursos">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Recursos Educacionais</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Terapias">
+                                <i class="fas fa-hands-helping"></i>
+                                <span>Terapias e Tratamentos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-item" data-category="Suporte">
+                                <i class="fas fa-users"></i>
+                                <span>Apoio Familiar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-fire"></i> Posts Populares</h3>
+                    <div class="popular-posts" id="popularPosts">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="forum-main">
+                <div class="forum-header">
+                    <div>
+                        <h1>Fórum da Comunidade</h1>
+                        <p class="forum-subtitle">Compartilhe experiências, tire dúvidas e apoie outras famílias</p>
+                    </div>
+                    <button class="btn-create-post" onclick="abrirNovoPost()">
+                        <i class="fas fa-plus"></i> Nova Discussão
+                    </button>
+                </div>
+
+                <div class="forum-filters">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchPosts" placeholder="Buscar discussões..." onkeyup="buscarPosts()">
+                    </div>
+                    <select id="orderBy" onchange="ordenarPosts()">
+                        <option value="recentes">Mais Recentes</option>
+                        <option value="populares">Mais Populares</option>
+                        <option value="respostas">Mais Respondidas</option>
+                    </select>
+                </div>
+
+                <div class="posts-list" id="postsList">
+                    <!-- Preenchido via JS -->
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- Modal Novo Post -->
+    <div class="modal" id="modalNovoPost">
+        <div class="modal-overlay" onclick="fecharNovoPost()"></div>
+        <div class="modal-content modal-novo-post">
+            <div class="modal-header">
+                <h2><i class="fas fa-pen"></i> Nova Discussão</h2>
+                <button class="modal-close" onclick="fecharNovoPost()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="postTitulo" class="form-control" placeholder="Título da discussão" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="postCategoria" class="form-control">
+                        <option value="Dicas">Dicas e Orientações</option>
+                        <option value="Duvidas">Dúvidas</option>
+                        <option value="Relatos">Relatos e Experiências</option>
+                        <option value="Recursos">Recursos Educacionais</option>
+                        <option value="Terapias">Terapias e Tratamentos</option>
+                        <option value="Suporte">Apoio Familiar</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tags (separe por vírgula)</label>
+                    <input type="text" id="postTags" class="form-control" placeholder="Ex: autismo, escola, comportamento">
+                </div>
+                <div class="form-group">
+                    <label>Conteúdo</label>
+                    <textarea id="postConteudo" class="form-control" rows="10" placeholder="Descreva sua dúvida, experiência ou dica..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="fecharNovoPost()">Cancelar</button>
+                <button class="btn-primary" onclick="criarPost()">
+                    <i class="fas fa-paper-plane"></i> Publicar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver Post -->
+    <div class="modal" id="modalVerPost">
+        <div class="modal-overlay" onclick="fecharVerPost()"></div>
+        <div class="modal-content modal-ver-post">
+            <div class="modal-header">
+                <button class="modal-close" onclick="fecharVerPost()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="postDetalhes">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+    <script src="acessibilidade.js"></script>
+    <script src="modal-confirmacao.js"></script>
+    <script src="forum.js"></script>
+</body>
+</html>

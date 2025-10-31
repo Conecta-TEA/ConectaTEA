@@ -1,0 +1,264 @@
+/* ==================== MODAL DE CONFIRMAÇÃO PERSONALIZADO ==================== */
+.modal-confirmacao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.modal-confirmacao.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-confirmacao-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    transform: scale(0.9) translateY(-20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-confirmacao.show .modal-confirmacao-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-confirmacao-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 40px;
+    animation: scaleIn 0.5s ease;
+}
+
+.modal-confirmacao-icon.logout {
+    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    color: white;
+}
+
+.modal-confirmacao-icon.danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.modal-confirmacao-icon.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.modal-confirmacao-icon.info {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-confirmacao-content h3 {
+    font-size: 24px;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.modal-confirmacao-content p {
+    font-size: 16px;
+    color: #64748b;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.modal-confirmacao-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-confirmacao-buttons button {
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    min-width: 120px;
+}
+
+.btn-modal-cancelar {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.btn-modal-cancelar:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.btn-modal-confirmar {
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.btn-modal-confirmar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.btn-modal-confirmar.danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-modal-confirmar.danger:hover {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* Senha para confirmação */
+.modal-senha-input {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.modal-senha-input label {
+    display: block;
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.modal-senha-input input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.modal-senha-input input:focus {
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
+}
+
+/* Toast de notificação */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10001;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+}
+
+.toast-notification.success {
+    border-left: 4px solid #10b981;
+}
+
+.toast-notification.error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast-notification.info {
+    border-left: 4px solid #3b82f6;
+}
+
+.toast-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.toast-notification.success .toast-icon {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.toast-notification.error .toast-icon {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.toast-notification.info .toast-icon {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.toast-content h4 {
+    font-size: 16px;
+    color: #1e293b;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.toast-content p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+}
+
+.toast-close:hover {
+    color: #64748b;
+}

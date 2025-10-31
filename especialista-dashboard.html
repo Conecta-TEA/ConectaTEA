@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Especialista - ConectaTEA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="especialista-dashboard.css">
+    <link rel="stylesheet" href="acessibilidade.css">
+    <link rel="stylesheet" href="modal-confirmacao.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>ConectaTEA</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Consultas</a></li>
+                    <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="especialista-dashboard.html" class="active"><i class="fas fa-user-md"></i> Dashboard</a></li>
+                    <li><a href="forum.html"><i class="fas fa-users"></i> Fórum</a></li>
+                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                    <li><a href="#" class="btn-profile" id="btnProfile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="headerUserName">Usuário</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="dashboard-container">
+            <!-- Sidebar Especialista -->
+            <aside class="dashboard-sidebar">
+                <div class="sidebar-header">
+                    <div class="specialist-avatar" id="specialistAvatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 id="specialistName">Dr. Especialista</h3>
+                    <p class="specialist-specialty" id="specialistSpecialty">Carregando...</p>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="#overview" class="nav-item active" data-section="overview">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Visão Geral</span>
+                    </a>
+                    <a href="#consultas" class="nav-item" data-section="consultas">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Consultas</span>
+                        <span class="badge" id="consultasBadge">0</span>
+                    </a>
+                    <a href="#pacientes" class="nav-item" data-section="pacientes">
+                        <i class="fas fa-users"></i>
+                        <span>Pacientes</span>
+                    </a>
+                    <a href="#mensagens" class="nav-item" data-section="mensagens">
+                        <i class="fas fa-envelope"></i>
+                        <span>Mensagens</span>
+                        <span class="badge" id="mensagensBadge">0</span>
+                    </a>
+                    <a href="#anamnese" class="nav-item" data-section="anamnese">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Anamneses</span>
+                    </a>
+                    <a href="#configuracoes" class="nav-item" data-section="configuracoes">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="dashboard-main">
+                <!-- Visão Geral -->
+                <div class="dashboard-content active" id="overview">
+                    <div class="content-header">
+                        <h1>Visão Geral</h1>
+                        <p class="subtitle">Bem-vindo ao seu painel de controle</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalConsultas">0</h3>
+                                <p>Consultas Hoje</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalPacientes">0</h3>
+                                <p>Pacientes Ativos</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalMensagens">0</h3>
+                                <p>Mensagens Não Lidas</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avaliacaoMedia">5.0</h3>
+                                <p>Avaliação Média</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-row">
+                        <div class="dashboard-col-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-clock"></i> Próximas Consultas</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="appointments-list" id="proximasConsultas">
+                                        <div class="empty-state">
+                                            <i class="fas fa-calendar-times"></i>
+                                            <p>Nenhuma consulta agendada para hoje</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-bell"></i> Notificações</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="notifications-list" id="notificacoes">
+                                        <div class="notification-item">
+                                            <i class="fas fa-info-circle"></i>
+                                            <p>Nenhuma notificação nova</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consultas -->
+                <div class="dashboard-content" id="consultas">
+                    <div class="content-header">
+                        <h1>Minhas Consultas</h1>
+                        <button class="btn-primary" onclick="agendarConsulta()">
+                            <i class="fas fa-plus"></i> Nova Consulta
+                        </button>
+                    </div>
+
+                    <div class="filters-bar">
+                        <select id="filtroStatus" onchange="filtrarConsultas()">
+                            <option value="">Todos os Status</option>
+                            <option value="agendada">Agendadas</option>
+                            <option value="concluida">Concluídas</option>
+                            <option value="cancelada">Canceladas</option>
+                        </select>
+                        <input type="date" id="filtroData" onchange="filtrarConsultas()">
+                    </div>
+
+                    <div class="consultas-table" id="consultasTable">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- Pacientes -->
+                <div class="dashboard-content" id="pacientes">
+                    <div class="content-header">
+                        <h1>Meus Pacientes</h1>
+                        <input type="search" placeholder="Buscar paciente..." id="searchPaciente" onkeyup="buscarPacientes()">
+                    </div>
+
+                    <div class="pacientes-grid" id="pacientesGrid">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- Mensagens -->
+                <div class="dashboard-content" id="mensagens">
+                    <div class="content-header">
+                        <h1>Mensagens</h1>
+                        <a href="chat.html" class="btn-primary">
+                            <i class="fas fa-comments"></i> Abrir Chat
+                        </a>
+                    </div>
+
+                    <div class="mensagens-list" id="mensagensList">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- Anamnese -->
+                <div class="dashboard-content" id="anamnese">
+                    <div class="content-header">
+                        <h1>Anamneses</h1>
+                        <button class="btn-primary" onclick="criarAnamnese()">
+                            <i class="fas fa-plus"></i> Nova Anamnese
+                        </button>
+                    </div>
+
+                    <div class="anamnese-list" id="anamneseList">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- Configurações -->
+                <div class="dashboard-content" id="configuracoes">
+                    <div class="content-header">
+                        <h1>Configurações</h1>
+                    </div>
+
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Especialidade</label>
+                            <input type="text" id="especialidade" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Registro Profissional</label>
+                            <input type="text" id="registroProfissional" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Biografia</label>
+                            <textarea id="biografia" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor da Consulta (R$)</label>
+                            <input type="number" id="valorConsulta" class="form-control" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Disponibilidade</label>
+                            <textarea id="disponibilidade" class="form-control" rows="3" placeholder="Ex: Seg-Sex 8h-18h"></textarea>
+                        </div>
+                        <button class="btn-primary" onclick="salvarConfiguracoes()">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+    <script src="acessibilidade.js"></script>
+    <script src="modal-confirmacao.js"></script>
+    <script src="especialista-dashboard.js"></script>
+</body>
+</html>

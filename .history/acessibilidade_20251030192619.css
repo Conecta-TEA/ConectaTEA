@@ -1,0 +1,337 @@
+/* Acessibilidade.css - Estilos para recursos de acessibilidade */
+
+/* Botão de Acessibilidade Flutuante */
+.btn-acessibilidade {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    z-index: 999;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-acessibilidade:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Menu de Acessibilidade */
+.acessibilidade-menu {
+    position: fixed;
+    bottom: 150px;
+    right: 30px;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s;
+}
+
+.acessibilidade-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.acessibilidade-header {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.acessibilidade-header h3 {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-close-acessibilidade {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.btn-close-acessibilidade:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.acessibilidade-content {
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Opções de Acessibilidade */
+.acessibilidade-opcao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.acessibilidade-opcao:hover {
+    background: #e2e8f0;
+}
+
+.acessibilidade-opcao-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.acessibilidade-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.icon-green { background: #d1fae5; color: #059669; }
+.icon-blue { background: #dbeafe; color: #2563eb; }
+.icon-purple { background: #e9d5ff; color: #9333ea; }
+.icon-orange { background: #fed7aa; color: #ea580c; }
+
+.acessibilidade-opcao-text h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #1e293b;
+}
+
+.acessibilidade-opcao-text p {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.btn-ativar {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 12px;
+}
+
+.btn-ativar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-ativar.active {
+    background: #dc2626;
+}
+
+/* Controles de Fonte */
+.font-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-font {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 2px solid #10b981;
+    background: white;
+    color: #10b981;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-font:hover {
+    background: #10b981;
+    color: white;
+}
+
+/* Modal de Libras */
+.libras-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.libras-modal.active {
+    display: flex;
+}
+
+.libras-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
+
+.libras-video-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.libras-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.libras-placeholder {
+    font-size: 80px;
+    color: #cbd5e1;
+}
+
+/* Alto Contraste */
+body.alto-contraste {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+body.alto-contraste * {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+body.alto-contraste .header {
+    background: #000 !important;
+    border-bottom: 2px solid #fff !important;
+}
+
+body.alto-contraste a {
+    color: #ffff00 !important;
+    text-decoration: underline !important;
+}
+
+body.alto-contraste button {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+}
+
+/* Fonte Grande */
+body.fonte-grande {
+    font-size: 120% !important;
+}
+
+body.fonte-grande * {
+    font-size: inherit !important;
+}
+
+/* Fonte Extra Grande */
+body.fonte-extra-grande {
+    font-size: 150% !important;
+}
+
+body.fonte-extra-grande * {
+    font-size: inherit !important;
+}
+
+/* Narração Ativa */
+.narracao-ativa {
+    outline: 3px solid #2563eb !important;
+    outline-offset: 2px;
+}
+
+/* Toast de Notificação Acessibilidade */
+.acessibilidade-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    z-index: 1001;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.acessibilidade-toast.show {
+    display: flex;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .btn-acessibilidade {
+        bottom: 70px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .acessibilidade-menu {
+        bottom: 130px;
+        right: 20px;
+        width: calc(100% - 40px);
+        max-width: 320px;
+    }
+}
