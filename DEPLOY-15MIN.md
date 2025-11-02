@@ -11,7 +11,7 @@
 ### 2️⃣ Criar Projeto
 ```
 📝 Name: conectatea
-🔑 Database Password: [ANOTE AQUI]
+🔑 Database Password: [Matheus/2006**]
 🌎 Region: South America (São Paulo)
 ⏱️ Aguardar ~2 min
 ```
