@@ -4,7 +4,7 @@ const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 require('dotenv').config();
-const db = require('./config/database-sqlite');
+const db = require('./config/db-selector');
 const authRoutes = require('./routes/auth-simple');
 const usuariosRoutes = require('./routes/usuarios');
 const chatRoutes = require('./routes/chat');
