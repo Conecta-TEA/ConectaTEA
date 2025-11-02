@@ -35,8 +35,9 @@
                     <span class="user-name" id="headerUserName">Usuário</span>
                     <span class="user-greeting">Bem-vindo(a)</span>
                 </div>
-                <a href="perfil.html" class="btn-perfil" title="Meu Perfil">
-                    <i class="fas fa-user-circle"></i>
+                <a href="perfil.html" class="btn-perfil" title="Meu Perfil" id="btnPerfilHeader">
+                    <img src="" alt="Foto de perfil" id="headerProfileImage" style="display: none;">
+                    <i class="fas fa-user-circle" id="headerProfileIcon"></i>
                 </a>
                 <button class="btn-sair" onclick="logout()">Sair</button>
             </div>
@@ -248,6 +249,28 @@
             const usuario = JSON.parse(localStorage.getItem('usuario'));
             if (usuario) {
                 document.getElementById('headerUserName').textContent = usuario.nome || 'Usuário';
+                
+                // Carregar foto de perfil no header
+                const headerProfileImage = document.getElementById('headerProfileImage');
+                const headerProfileIcon = document.getElementById('headerProfileIcon');
+                
+                if (usuario.foto_perfil) {
+                    // Se a foto já tem http://, usa direto; senão, adiciona o backend URL
+                    let fotoPath = usuario.foto_perfil;
+                    // Remove barra inicial se existir
+                    if (fotoPath.startsWith('/')) {
+                        fotoPath = fotoPath.substring(1);
+                    }
+                    const fotoUrl = fotoPath.startsWith('http') 
+                        ? fotoPath 
+                        : `http://localhost:3000/${fotoPath}`;
+                    headerProfileImage.src = fotoUrl;
+                    headerProfileImage.style.display = 'block';
+                    headerProfileIcon.style.display = 'none';
+                } else {
+                    headerProfileImage.style.display = 'none';
+                    headerProfileIcon.style.display = 'block';
+                }
             }
         });
     </script>

@@ -3,278 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal do Especialista - ConectaTEA</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="especialista-dashboard.css">
-    <link rel="stylesheet" href="acessibilidade.css">
-    <link rel="stylesheet" href="modal-confirmacao.css">
+    <title>Painel do Especialista - ConectaTEA</title>
+    <link rel="stylesheet" href="especialista-painel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <i class="fas fa-puzzle-piece"></i>
-                    <span>ConectaTEA</span>
-                </div>
-                <button class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
-                    <li><a href="consultas.html"><i class="fas fa-calendar-check"></i> Consultas</a></li>
-                    <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
-                    <li><a href="especialista-dashboard.html" class="active"><i class="fas fa-user-md"></i> Dashboard</a></li>
-                    <li><a href="forum.html"><i class="fas fa-users"></i> Fórum</a></li>
-                    <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
-                    <li><a href="#" class="btn-profile" id="btnProfile">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="headerUserName">Usuário</span>
-                    </a></li>
-                </ul>
+    <!-- Header Fixo -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>ConectaTEA</span>
             </div>
-        </nav>
+        </div>
+        <div class="header-right">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="badgeNotificacoes">0</span>
+            </div>
+            <div class="user-menu">
+                <img src="https://via.placeholder.com/40" alt="Foto" id="headerFoto">
+                <span id="headerNome">Carregando...</span>
+                <i class="fas fa-chevron-down"></i>
+                <div class="user-dropdown">
+                    <a href="#" onclick="trocarPagina('perfil')"><i class="fas fa-user"></i> Meu Perfil</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Dashboard Section -->
-    <section class="dashboard-section">
-        <div class="dashboard-container">
-            <!-- Sidebar Especialista -->
-            <aside class="dashboard-sidebar">
-                <div class="sidebar-header">
-                    <div class="specialist-avatar" id="specialistAvatar">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <h3 id="specialistName">Dr. Especialista</h3>
-                    <p class="specialist-specialty" id="specialistSpecialty">Carregando...</p>
-                </div>
+    <!-- Sidebar Fixa -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="pacientes">
+                <i class="fas fa-users"></i>
+                <span>Pacientes</span>
+            </a>
+            <a href="#" class="nav-item" data-page="reunioes">
+                <i class="fas fa-video"></i>
+                <span>Reuniões</span>
+            </a>
+            <a href="#" class="nav-item" data-page="chat">
+                <i class="fas fa-comments"></i>
+                <span>Chat</span>
+                <span class="badge" id="badgeChat">0</span>
+            </a>
+            <a href="#" class="nav-item" data-page="prontuarios">
+                <i class="fas fa-file-medical"></i>
+                <span>Prontuários</span>
+            </a>
+            <a href="#" class="nav-item" data-page="perfil">
+                <i class="fas fa-user-cog"></i>
+                <span>Perfil</span>
+            </a>
+        </nav>
+    </aside>
 
-                <nav class="sidebar-nav">
-                    <a href="#overview" class="nav-item active" data-section="overview">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Visão Geral</span>
-                    </a>
-                    <a href="#consultas" class="nav-item" data-section="consultas">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Consultas</span>
-                        <span class="badge" id="consultasBadge">0</span>
-                    </a>
-                    <a href="#pacientes" class="nav-item" data-section="pacientes">
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <!-- PÁGINA: Dashboard -->
+        <div class="page active" id="page-dashboard">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <p>Visão geral dos seus atendimentos</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon">
                         <i class="fas fa-users"></i>
-                        <span>Pacientes</span>
-                    </a>
-                    <a href="#mensagens" class="nav-item" data-section="mensagens">
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statPacientes">0</h3>
+                        <p>Pacientes</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statReunioes">0</h3>
+                        <p>Reuniões Hoje</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-green">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statPendentes">0</h3>
+                        <p>Pendentes</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-orange">
+                    <div class="stat-icon">
                         <i class="fas fa-envelope"></i>
-                        <span>Mensagens</span>
-                        <span class="badge" id="mensagensBadge">0</span>
-                    </a>
-                    <a href="#anamnese" class="nav-item" data-section="anamnese">
-                        <i class="fas fa-clipboard-list"></i>
-                        <span>Anamneses</span>
-                    </a>
-                    <a href="#configuracoes" class="nav-item" data-section="configuracoes">
-                        <i class="fas fa-cog"></i>
-                        <span>Configurações</span>
-                    </a>
-                </nav>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="dashboard-main">
-                <!-- Visão Geral -->
-                <div class="dashboard-content active" id="overview">
-                    <div class="content-header">
-                        <h1>Visão Geral</h1>
-                        <p class="subtitle">Bem-vindo ao seu painel de controle</p>
                     </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="totalConsultas">0</h3>
-                                <p>Consultas Hoje</p>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="totalPacientes">0</h3>
-                                <p>Pacientes Ativos</p>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="totalMensagens">0</h3>
-                                <p>Mensagens Não Lidas</p>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="avaliacaoMedia">5.0</h3>
-                                <p>Avaliação Média</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-row">
-                        <div class="dashboard-col-8">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-clock"></i> Próximas Consultas</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="appointments-list" id="proximasConsultas">
-                                        <div class="empty-state">
-                                            <i class="fas fa-calendar-times"></i>
-                                            <p>Nenhuma consulta agendada para hoje</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dashboard-col-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-bell"></i> Notificações</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="notifications-list" id="notificacoes">
-                                        <div class="notification-item">
-                                            <i class="fas fa-info-circle"></i>
-                                            <p>Nenhuma notificação nova</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="stat-info">
+                        <h3 id="statMensagens">0</h3>
+                        <p>Mensagens</p>
                     </div>
                 </div>
-
-                <!-- Consultas -->
-                <div class="dashboard-content" id="consultas">
-                    <div class="content-header">
-                        <h1>Minhas Consultas</h1>
-                        <button class="btn-primary" onclick="agendarConsulta()">
-                            <i class="fas fa-plus"></i> Nova Consulta
-                        </button>
-                    </div>
-
-                    <div class="filters-bar">
-                        <select id="filtroStatus" onchange="filtrarConsultas()">
-                            <option value="">Todos os Status</option>
-                            <option value="agendada">Agendadas</option>
-                            <option value="concluida">Concluídas</option>
-                            <option value="cancelada">Canceladas</option>
-                        </select>
-                        <input type="date" id="filtroData" onchange="filtrarConsultas()">
-                    </div>
-
-                    <div class="consultas-table" id="consultasTable">
-                        <!-- Preenchido via JS -->
-                    </div>
-                </div>
-
-                <!-- Pacientes -->
-                <div class="dashboard-content" id="pacientes">
-                    <div class="content-header">
-                        <h1>Meus Pacientes</h1>
-                        <input type="search" placeholder="Buscar paciente..." id="searchPaciente" onkeyup="buscarPacientes()">
-                    </div>
-
-                    <div class="pacientes-grid" id="pacientesGrid">
-                        <!-- Preenchido via JS -->
-                    </div>
-                </div>
-
-                <!-- Mensagens -->
-                <div class="dashboard-content" id="mensagens">
-                    <div class="content-header">
-                        <h1>Mensagens</h1>
-                        <a href="chat.html" class="btn-primary">
-                            <i class="fas fa-comments"></i> Abrir Chat
-                        </a>
-                    </div>
-
-                    <div class="mensagens-list" id="mensagensList">
-                        <!-- Preenchido via JS -->
-                    </div>
-                </div>
-
-                <!-- Anamnese -->
-                <div class="dashboard-content" id="anamnese">
-                    <div class="content-header">
-                        <h1>Anamneses</h1>
-                        <button class="btn-primary" onclick="criarAnamnese()">
-                            <i class="fas fa-plus"></i> Nova Anamnese
-                        </button>
-                    </div>
-
-                    <div class="anamnese-list" id="anamneseList">
-                        <!-- Preenchido via JS -->
-                    </div>
-                </div>
-
-                <!-- Configurações -->
-                <div class="dashboard-content" id="configuracoes">
-                    <div class="content-header">
-                        <h1>Configurações</h1>
-                    </div>
-
-                    <div class="settings-form">
-                        <div class="form-group">
-                            <label>Especialidade</label>
-                            <input type="text" id="especialidade" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Registro Profissional</label>
-                            <input type="text" id="registroProfissional" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Biografia</label>
-                            <textarea id="biografia" class="form-control" rows="5"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Valor da Consulta (R$)</label>
-                            <input type="number" id="valorConsulta" class="form-control" step="0.01">
-                        </div>
-                        <div class="form-group">
-                            <label>Disponibilidade</label>
-                            <textarea id="disponibilidade" class="form-control" rows="3" placeholder="Ex: Seg-Sex 8h-18h"></textarea>
-                        </div>
-                        <button class="btn-primary" onclick="salvarConfiguracoes()">
-                            <i class="fas fa-save"></i> Salvar Alterações
-                        </button>
-                    </div>
-                </div>
-            </main>
+            </div>
         </div>
-    </section>
 
-    <!-- Botão Voltar ao Topo -->
-    <button id="backToTop" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+        <!-- PÁGINA: Pacientes -->
+        <div class="page" id="page-pacientes">
+            <div class="page-header">
+                <h1>Meus Pacientes</h1>
+                <button class="btn-primary" onclick="mostrarModalVincular()">
+                    <i class="fas fa-plus"></i> Vincular Paciente
+                </button>
+            </div>
 
-    <script src="script.js"></script>
-    <script src="acessibilidade.js"></script>
-    <script src="modal-confirmacao.js"></script>
-    <script src="especialista-dashboard.js"></script>
+            <div class="pacientes-grid" id="pacientesGrid">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+
+        <!-- PÁGINA: Reuniões -->
+        <div class="page" id="page-reunioes">
+            <div class="page-header">
+                <h1>Reuniões</h1>
+                <button class="btn-primary" onclick="mostrarModalReuniao()">
+                    <i class="fas fa-plus"></i> Agendar Reunião
+                </button>
+            </div>
+
+            <div class="reunioes-lista" id="reunioesLista">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+
+        <!-- PÁGINA: Chat -->
+        <div class="page" id="page-chat">
+            <div class="page-header">
+                <h1>Chat</h1>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-sidebar">
+                    <div class="chat-search">
+                        <input type="text" placeholder="Buscar conversa...">
+                    </div>
+                    <div class="conversas-lista" id="conversasLista">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <div class="chat-main">
+                    <div class="chat-messages" id="chatMessages">
+                        <p style="text-align: center; color: #718096; padding: 2rem;">
+                            Selecione uma conversa para começar
+                        </p>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="mensagemTexto" placeholder="Digite sua mensagem...">
+                        <button class="btn-primary" onclick="enviarMensagem()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA: Prontuários -->
+        <div class="page" id="page-prontuarios">
+            <div class="page-header">
+                <h1>Prontuários</h1>
+                <button class="btn-primary" onclick="mostrarModalProntuario()">
+                    <i class="fas fa-plus"></i> Novo Prontuário
+                </button>
+            </div>
+
+            <div class="form-row">
+                <select id="selectPacienteProntuario" onchange="carregarProntuariosPaciente()">
+                    <option value="">Selecione um paciente</option>
+                </select>
+            </div>
+
+            <div class="prontuarios-lista" id="prontuariosLista">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+
+        <!-- PÁGINA: Perfil -->
+        <div class="page" id="page-perfil">
+            <div class="page-header">
+                <h1>Meu Perfil</h1>
+            </div>
+
+            <form id="formPerfil" class="card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Especialidade</label>
+                        <input type="text" id="perfilEspecialidade">
+                    </div>
+                    <div class="form-group">
+                        <label>Registro Profissional</label>
+                        <input type="text" id="perfilRegistro">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição Profissional</label>
+                    <textarea id="perfilDescricao" rows="5"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Valor da Consulta (R$)</label>
+                        <input type="number" id="perfilValor" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Link Google Meet</label>
+                        <input type="url" id="perfilGoogleMeet">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- MODAL: Vincular Paciente -->
+    <div class="modal-overlay" id="modalVincular">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Vincular Paciente</h2>
+                <button class="modal-close" onclick="fecharModal('modalVincular')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formVincular">
+                <div class="form-group">
+                    <label>Email do Paciente</label>
+                    <input type="email" id="emailPaciente" required>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea id="observacoes" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalVincular')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-link"></i> Vincular
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Agendar Reunião -->
+    <div class="modal-overlay" id="modalReuniao">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agendar Reunião</h2>
+                <button class="modal-close" onclick="fecharModal('modalReuniao')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formReuniao">
+                <div class="form-group">
+                    <label>Paciente</label>
+                    <select id="pacienteReuniao" required>
+                        <option value="">Selecione um paciente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="tituloReuniao" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="descricaoReuniao" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data e Hora</label>
+                        <input type="datetime-local" id="dataHoraReuniao" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Duração (min)</label>
+                        <input type="number" id="duracaoReuniao" value="60" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalReuniao')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-calendar-plus"></i> Agendar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Novo Prontuário -->
+    <div class="modal-overlay" id="modalProntuario">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Novo Prontuário</h2>
+                <button class="modal-close" onclick="fecharModal('modalProntuario')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formProntuario">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Paciente</label>
+                        <select id="pacienteProntuario" required>
+                            <option value="">Selecione um paciente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="tipoProntuario" required>
+                            <option value="avaliacao">Avaliação</option>
+                            <option value="evolucao">Evolução</option>
+                            <option value="prescricao">Prescrição</option>
+                            <option value="observacao">Observação</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="tituloProntuario" required>
+                </div>
+                <div class="form-group">
+                    <label>Conteúdo</label>
+                    <textarea id="conteudoProntuario" rows="10" required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalProntuario')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Salvar Prontuário
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="especialista-painel.js"></script>
 </body>
 </html>

@@ -49,8 +49,9 @@
                     <span class="user-name" id="headerUserName">Usuário</span>
                     <span class="user-greeting" id="headerGreeting">Bem-vindo(a)</span>
                 </div>
-                <a href="perfil.html" class="btn-perfil" title="Meu Perfil">
-                    <i class="fas fa-user-circle"></i>
+                <a href="perfil.html" class="btn-perfil" title="Meu Perfil" id="btnPerfilHeader">
+                    <img src="" alt="Foto de perfil" id="headerProfileImage" style="display: none;">
+                    <i class="fas fa-user-circle" id="headerProfileIcon"></i>
                 </a>
                 <button class="btn-sair" onclick="logout()">Sair</button>
             </div>
@@ -75,10 +76,63 @@
             </div>
             <div class="hero-image">
                 <div class="hero-illustration">
-                    <div class="puzzle-piece puzzle-1"><i class="fas fa-puzzle-piece"></i></div>
-                    <div class="puzzle-piece puzzle-2"><i class="fas fa-puzzle-piece"></i></div>
-                    <div class="puzzle-piece puzzle-3"><i class="fas fa-puzzle-piece"></i></div>
-                    <div class="puzzle-piece puzzle-4"><i class="fas fa-puzzle-piece"></i></div>
+                    <!-- Formas geométricas de fundo -->
+                    <div class="hero-shape shape-1"></div>
+                    <div class="hero-shape shape-2"></div>
+                    <div class="hero-shape shape-3"></div>
+                    <div class="hero-shape shape-4"></div>
+                    
+                    <!-- Container principal com coração central -->
+                    <div class="hero-main-visual">
+                        <div class="heart-container">
+                            <i class="fas fa-heart hero-heart"></i>
+                            <div class="heart-pulse"></div>
+                        </div>
+                        
+                        <!-- Peças de puzzle orbitando -->
+                        <div class="orbit-container">
+                            <div class="orbit-item orbit-1">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="orbit-item orbit-2">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="orbit-item orbit-3">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="orbit-item orbit-4">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="orbit-item orbit-5">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="orbit-item orbit-6">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ícones flutuantes -->
+                    <div class="floating-icons">
+                        <div class="float-icon float-1"><i class="fas fa-users"></i></div>
+                        <div class="float-icon float-2"><i class="fas fa-hand-holding-heart"></i></div>
+                        <div class="float-icon float-3"><i class="fas fa-brain"></i></div>
+                        <div class="float-icon float-4"><i class="fas fa-star"></i></div>
+                        <div class="float-icon float-5"><i class="fas fa-smile"></i></div>
+                        <div class="float-icon float-6"><i class="fas fa-book-open"></i></div>
+                    </div>
+                    
+                    <!-- Partículas decorativas -->
+                    <div class="particles">
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -226,37 +280,37 @@
                     <div class="recurso-icon"><i class="fas fa-book-open"></i></div>
                     <h3>Material Educativo</h3>
                     <p>Guias, artigos e e-books sobre TEA, terapias e desenvolvimento infantil.</p>
-                    <button class="btn-link">Saiba Mais →</button>
+                    <a href="recursos.html" class="btn-link">Saiba Mais →</a>
                 </div>
                 <div class="recurso-card">
                     <div class="recurso-icon"><i class="fas fa-puzzle-piece"></i></div>
                     <h3>Atividades Práticas</h3>
                     <p>Exercícios e atividades para estimular desenvolvimento cognitivo e social.</p>
-                    <button class="btn-link">Explorar →</button>
+                    <a href="#atividades" class="btn-link">Explorar →</a>
                 </div>
                 <div class="recurso-card">
                     <div class="recurso-icon"><i class="fas fa-user-doctor"></i></div>
                     <h3>Profissionais</h3>
                     <p>Rede de especialistas: terapeutas, psicólogos e educadores especializados.</p>
-                    <button class="btn-link">Encontrar →</button>
+                    <a href="especialistas.html" class="btn-link">Encontrar →</a>
                 </div>
                 <div class="recurso-card">
                     <div class="recurso-icon"><i class="fas fa-comments"></i></div>
                     <h3>Comunidade</h3>
                     <p>Fórum e grupos de apoio para troca de experiências entre famílias.</p>
-                    <button class="btn-link">Participar →</button>
+                    <a href="#contato" class="btn-link">Participar →</a>
                 </div>
                 <div class="recurso-card">
                     <div class="recurso-icon"><i class="fas fa-palette"></i></div>
                     <h3>Ferramentas Visuais</h3>
                     <p>Calendários visuais, rotinas e ferramentas de comunicação alternativa.</p>
-                    <button class="btn-link">Acessar →</button>
+                    <a href="recursos.html" class="btn-link">Acessar →</a>
                 </div>
                 <div class="recurso-card">
                     <div class="recurso-icon"><i class="fas fa-gamepad"></i></div>
                     <h3>Apps & Jogos</h3>
                     <p>Aplicativos educativos e jogos adaptados para crianças com TEA.</p>
-                    <button class="btn-link">Descobrir →</button>
+                    <a href="recursos.html" class="btn-link">Descobrir →</a>
                 </div>
             </div>
         </div>
@@ -535,6 +589,7 @@
 
     <!-- Botão de Acessibilidade já existe -->
 
+    <script src="placeholder.js"></script>
     <script src="script.js"></script>
     <script src="acessibilidade.js"></script>
     <script>
@@ -550,6 +605,28 @@
 
             // Atualizar nome do usuário no header
             document.getElementById('headerUserName').textContent = usuario.nome || 'Usuário';
+            
+            // Carregar foto de perfil no header
+            const headerProfileImage = document.getElementById('headerProfileImage');
+            const headerProfileIcon = document.getElementById('headerProfileIcon');
+            
+            if (usuario.foto_perfil) {
+                // Se a foto já tem http://, usa direto; senão, adiciona o backend URL
+                let fotoPath = usuario.foto_perfil;
+                // Remove barra inicial se existir
+                if (fotoPath.startsWith('/')) {
+                    fotoPath = fotoPath.substring(1);
+                }
+                const fotoUrl = fotoPath.startsWith('http') 
+                    ? fotoPath 
+                    : `http://localhost:3000/${fotoPath}`;
+                headerProfileImage.src = fotoUrl;
+                headerProfileImage.style.display = 'block';
+                headerProfileIcon.style.display = 'none';
+            } else {
+                headerProfileImage.style.display = 'none';
+                headerProfileIcon.style.display = 'block';
+            }
             
             // Verificar se é primeira vez ou retorno
             const jaVisitou = localStorage.getItem('jaVisitou');
@@ -588,6 +665,5 @@
         }
     </script>
     <script src="modal-confirmacao.js"></script>
-    <script src="acessibilidade.js"></script>
 </body>
 </html>

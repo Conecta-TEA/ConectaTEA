@@ -397,8 +397,9 @@ body {
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-    padding: 120px 0 80px;
+    padding: 90px 0 60px;
     margin-top: 70px;
+    position: relative;
 }
 
 .hero .container {
@@ -465,53 +466,366 @@ body {
 
 .hero-illustration {
     position: relative;
-    height: 400px;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Formas geométricas de fundo */
+.hero-shape {
+    position: absolute;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(192, 132, 252, 0.08) 100%);
+    animation: morphShape 20s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 250px;
+    height: 250px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 180px;
+    height: 180px;
+    top: 60%;
+    right: 10%;
+    animation-delay: 3s;
+}
+
+.shape-3 {
+    width: 220px;
+    height: 220px;
+    bottom: 10%;
+    left: 15%;
+    animation-delay: 6s;
+}
+
+.shape-4 {
+    width: 160px;
+    height: 160px;
+    top: 20%;
+    right: 20%;
+    animation-delay: 9s;
+}
+
+/* Container principal */
+.hero-main-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.puzzle-piece {
-    font-size: 4rem;
+/* Coração central */
+.heart-container {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-heart {
+    font-size: 5rem;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 10px 30px rgba(168, 85, 247, 0.4));
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+.heart-pulse {
     position: absolute;
-    animation: float 3s ease-in-out infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 3px solid rgba(168, 85, 247, 0.3);
+    border-radius: 50%;
+    animation: pulse-ring 2s ease-out infinite;
 }
 
-.puzzle-piece i {
-    color: #a855f7;
-    opacity: 0.7;
+/* Órbita de peças de puzzle */
+.orbit-container {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    animation: rotate-orbit 30s linear infinite;
 }
 
-.puzzle-1 {
+.orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55px;
+    height: 55px;
+    margin: -27.5px 0 0 -27.5px;
+    animation: orbit-reverse 30s linear infinite;
+}
+
+.orbit-item i {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 5px 15px rgba(168, 85, 247, 0.3));
+    animation: spin 4s ease-in-out infinite;
+}
+
+.orbit-1 {
+    transform: rotate(0deg) translateX(175px);
+}
+
+.orbit-2 {
+    transform: rotate(60deg) translateX(175px);
+}
+
+.orbit-3 {
+    transform: rotate(120deg) translateX(175px);
+}
+
+.orbit-4 {
+    transform: rotate(180deg) translateX(175px);
+}
+
+.orbit-5 {
+    transform: rotate(240deg) translateX(175px);
+}
+
+.orbit-6 {
+    transform: rotate(300deg) translateX(175px);
+}
+
+/* Ícones flutuantes */
+.floating-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.float-icon {
+    position: absolute;
+    font-size: 1.8rem;
+    opacity: 0.6;
+    animation: float-gentle 6s ease-in-out infinite;
+}
+
+.float-icon i {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 3px 10px rgba(240, 147, 251, 0.3));
+}
+
+.float-1 {
     top: 10%;
     left: 10%;
     animation-delay: 0s;
 }
 
-.puzzle-2 {
-    top: 10%;
-    right: 10%;
-    animation-delay: 0.5s;
-}
-
-.puzzle-3 {
-    bottom: 10%;
-    left: 10%;
+.float-2 {
+    top: 15%;
+    right: 15%;
     animation-delay: 1s;
 }
 
-.puzzle-4 {
-    bottom: 10%;
-    right: 10%;
-    animation-delay: 1.5s;
+.float-3 {
+    top: 50%;
+    left: 5%;
+    animation-delay: 2s;
 }
 
-@keyframes float {
+.float-4 {
+    top: 50%;
+    right: 5%;
+    animation-delay: 3s;
+}
+
+.float-5 {
+    bottom: 15%;
+    left: 15%;
+    animation-delay: 4s;
+}
+
+.float-6 {
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 5s;
+}
+
+/* Partículas */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particle-rise 8s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+    left: 25%;
+    animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+    left: 40%;
+    animation-delay: 2s;
+}
+
+.particle:nth-child(4) {
+    left: 55%;
+    animation-delay: 3s;
+}
+
+.particle:nth-child(5) {
+    left: 70%;
+    animation-delay: 4s;
+}
+
+.particle:nth-child(6) {
+    left: 85%;
+    animation-delay: 5s;
+}
+
+.particle:nth-child(7) {
+    left: 15%;
+    animation-delay: 6s;
+}
+
+.particle:nth-child(8) {
+    left: 60%;
+    animation-delay: 7s;
+}
+
+/* Animações */
+@keyframes morphShape {
     0%, 100% {
-        transform: translateY(0);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+        transform: rotate(90deg) scale(1.1);
     }
     50% {
-        transform: translateY(-20px);
+        border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+        transform: rotate(180deg) scale(0.9);
+    }
+    75% {
+        border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+        transform: rotate(270deg) scale(1.05);
+    }
+}
+
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    10%, 30% {
+        transform: scale(1.1);
+    }
+    20%, 40% {
+        transform: scale(0.95);
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes rotate-orbit {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbit-reverse {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes float-gentle {
+    0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(-30px) translateX(-10px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-15px) translateX(5px) rotate(3deg);
+    }
+}
+
+@keyframes particle-rise {
+    0% {
+        bottom: 0;
+        opacity: 0;
+        transform: translateX(0) scale(0.5);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(20px) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-15px) scale(0.8);
+    }
+    75% {
+        opacity: 0.4;
+        transform: translateX(10px) scale(1.2);
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+        transform: translateX(-20px) scale(0.3);
     }
 }
 
@@ -791,7 +1105,36 @@ body {
 /* Atividades Section */
 .atividades {
     padding: 80px 0;
-    background: var(--white);
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.atividades::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.atividades::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.atividades .container {
+    position: relative;
+    z-index: 1;
 }
 
 .atividades-tabs {
@@ -803,21 +1146,48 @@ body {
 }
 
 .tab-btn {
-    padding: 12px 30px;
-    border: 2px solid var(--primary-color);
+    padding: 14px 32px;
+    border: none;
     background: var(--white);
-    color: var(--primary-color);
-    border-radius: 6px;
+    color: var(--text-dark);
+    border-radius: 50px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.tab-btn:hover::before,
+.tab-btn.active::before {
+    left: 0;
 }
 
 .tab-btn:hover,
 .tab-btn.active {
-    background: var(--gradient);
     color: var(--white);
-    border-color: transparent;
+}
+
+.tab-btn.active {
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 .tab-content {
@@ -826,13 +1196,13 @@ body {
 
 .tab-content.active {
     display: block;
-    animation: fadeIn 0.5s ease;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -843,53 +1213,95 @@ body {
 .atividade-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .atividade-item {
-    background: var(--bg-light);
-    border-radius: 8px;
+    background: var(--white);
+    border-radius: 16px;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.atividade-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .atividade-item:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+}
+
+.atividade-item:hover::before {
+    transform: scaleX(1);
 }
 
 .atividade-item img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.atividade-item:hover img {
+    transform: scale(1.08);
 }
 
 .atividade-item h4 {
-    padding: 1rem 1.5rem 0.5rem;
+    padding: 1.5rem 1.5rem 0.5rem;
     color: var(--text-dark);
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
 .atividade-item p {
-    padding: 0 1.5rem 1rem;
+    padding: 0 1.5rem 1.5rem;
     color: var(--text-light);
+    line-height: 1.6;
 }
 
 .dificuldade {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     margin: 0 1.5rem 1.5rem;
-    padding: 5px 15px;
-    border-radius: 6px;
+    padding: 8px 18px;
+    border-radius: 50px;
     font-size: 0.85rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dificuldade::before {
+    content: '●';
+    font-size: 0.7rem;
+}
+
+.dificuldade:hover {
+    transform: scale(1.05);
 }
 
 .dificuldade.facil {
-    background: #48bb78;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
     color: var(--white);
 }
 
 .dificuldade.media {
-    background: #ed8936;
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
     color: var(--white);
 }
 
@@ -1155,7 +1567,7 @@ body {
 .scroll-top-btn {
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    right: 100px;  /* À esquerda do botão de acessibilidade (invertido) */
     width: 50px;
     height: 50px;
     background: var(--gradient);
@@ -1233,6 +1645,69 @@ body {
 
     .hero-title {
         font-size: 2rem;
+    }
+    
+    .hero-illustration {
+        height: 400px;
+        margin-top: 2rem;
+    }
+    
+    .hero-heart {
+        font-size: 4rem;
+    }
+    
+    .orbit-container {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .orbit-item {
+        width: 45px;
+        height: 45px;
+        margin: -22.5px 0 0 -22.5px;
+    }
+    
+    .orbit-item i {
+        font-size: 1.8rem;
+    }
+    
+    .orbit-1, .orbit-2, .orbit-3, .orbit-4, .orbit-5, .orbit-6 {
+        transform: rotate(var(--angle, 0deg)) translateX(140px);
+    }
+    
+    .orbit-1 { --angle: 0deg; }
+    .orbit-2 { --angle: 60deg; }
+    .orbit-3 { --angle: 120deg; }
+    .orbit-4 { --angle: 180deg; }
+    .orbit-5 { --angle: 240deg; }
+    .orbit-6 { --angle: 300deg; }
+    
+    .float-icon {
+        font-size: 1.5rem;
+    }
+    
+    .hero-shape {
+        opacity: 0.5;
+    }
+    
+    .shape-1 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .shape-2 {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .shape-3 {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .shape-4 {
+        width: 130px;
+        height: 130px;
     }
 
     .about-content,
@@ -2101,9 +2576,29 @@ body {
     transition: all 0.3s;
     margin-right: 15px;
     opacity: 0.9;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-perfil:hover {
     opacity: 1;
     transform: scale(1.1);
+}
+
+.btn-perfil img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #a855f7;
+    transition: all 0.3s;
+}
+
+.btn-perfil:hover img {
+    border-color: #9333ea;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
 }

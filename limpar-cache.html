@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Cache - ConectaTEA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            color: #333;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+        }
+        h1 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .success {
+            background: #48bb78;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        .info {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .info p {
+            margin: 5px 0;
+            text-align: left;
+        }
+        .info strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Limpar Cache do Sistema</h1>
+        
+        <div class="info">
+            <p><strong>📋 Credenciais do Especialista:</strong></p>
+            <p>Email: <code>admin@especialista.com</code></p>
+            <p>Senha: <code>admin123</code></p>
+        </div>
+
+        <p>Clique no botão abaixo para limpar os dados salvos e fazer login novamente.</p>
+        
+        <button class="btn" onclick="limparCache()">
+            🗑️ Limpar Cache e Ir para Login
+        </button>
+        
+        <div class="success" id="success">
+            ✅ Cache limpo com sucesso! Redirecionando...
+        </div>
+    </div>
+
+    <script>
+        function limparCache() {
+            // Limpar todo o localStorage
+            localStorage.clear();
+            
+            // Limpar sessionStorage também
+            sessionStorage.clear();
+            
+            // Mostrar mensagem de sucesso
+            document.getElementById('success').style.display = 'block';
+            
+            // Redirecionar para login após 2 segundos
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+
+        // Verificar se já está na página
+        if (window.location.pathname.includes('limpar-cache.html')) {
+            console.log('Página de limpeza de cache carregada');
+        }
+    </script>
+</body>
+</html>

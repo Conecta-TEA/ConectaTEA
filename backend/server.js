@@ -10,6 +10,8 @@ const usuariosRoutes = require('./routes/usuarios');
 const chatRoutes = require('./routes/chat');
 const especialistasRoutes = require('./routes/especialistas');
 const forumRoutes = require('./routes/forum');
+const especialistaRoutes = require('./routes/especialista');
+const mensagensRoutes = require('./routes/mensagens');
 
 const app = express();
 const server = http.createServer(app);
@@ -36,6 +38,8 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/especialistas', especialistasRoutes);
 app.use('/api/forum', forumRoutes);
+app.use('/api/especialista', especialistaRoutes);
+app.use('/api/mensagens', mensagensRoutes);
 
 // Socket.IO - Chat em tempo real
 const usuariosOnline = new Map();

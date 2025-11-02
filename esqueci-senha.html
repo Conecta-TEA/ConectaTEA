@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - ConectaTEA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="logo-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h1>ConectaTEA</h1>
+                <p>Recuperação de Senha</p>
+            </div>
+
+            <!-- Etapa 1: Solicitar código -->
+            <div class="auth-form active" id="formSolicitarCodigo">
+                <h2>Esqueceu sua senha?</h2>
+                <p class="subtitle">Digite seu email para receber um código de recuperação</p>
+
+                <form id="formEmail">
+                    <div class="form-group">
+                        <label for="emailRecuperacao">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                        <input 
+                            type="email" 
+                            id="emailRecuperacao" 
+                            placeholder="seu-email@exemplo.com" 
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-paper-plane"></i> Enviar Código
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Lembrou sua senha? <a href="login.html">Fazer login</a></p>
+                </div>
+            </div>
+
+            <!-- Etapa 2: Digitar código recebido -->
+            <div class="auth-form" id="formDigitarCodigo">
+                <button type="button" class="btn-voltar" onclick="voltarParaEmail()">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+
+                <h2>Digite o código</h2>
+                <p class="subtitle">Enviamos um código de 6 dígitos para <strong id="emailEnviado"></strong></p>
+
+                <form id="formValidarCodigo">
+                    <div class="form-group">
+                        <label for="codigoValidacao">
+                            <i class="fas fa-shield-alt"></i> Código de Verificação
+                        </label>
+                        <input 
+                            type="text" 
+                            id="codigoValidacao" 
+                            placeholder="000000" 
+                            maxlength="6"
+                            pattern="[0-9]{6}"
+                            required
+                            class="code-input"
+                        >
+                        <small class="code-hint">
+                            <i class="fas fa-clock"></i> O código expira em 10 minutos
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </form>
+
+                <div class="resend-section">
+                    <p>Não recebeu o código?</p>
+                    <button type="button" class="btn-link" onclick="reenviarCodigo()">
+                        <i class="fas fa-redo"></i> Reenviar código
+                    </button>
+                </div>
+            </div>
+
+            <!-- Etapa 3: Nova senha -->
+            <div class="auth-form" id="formNovaSenha">
+                <button type="button" class="btn-voltar" onclick="voltarParaCodigo()">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+
+                <h2>Defina sua nova senha</h2>
+                <p class="subtitle">Código validado! Agora crie uma nova senha segura</p>
+
+                <form id="formRedefinir">
+                    <div class="form-group">
+                        <label for="novaSenha">
+                            <i class="fas fa-key"></i> Nova Senha
+                        </label>
+                        <input 
+                            type="password" 
+                            id="novaSenha" 
+                            placeholder="Mínimo 6 caracteres" 
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmarSenha">
+                            <i class="fas fa-check-circle"></i> Confirmar Senha
+                        </label>
+                        <input 
+                            type="password" 
+                            id="confirmarSenha" 
+                            placeholder="Digite a senha novamente" 
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-check"></i> Redefinir Senha
+                    </button>
+                </form>
+            </div>
+
+            <!-- Etapa 4: Sucesso -->
+            <div class="auth-form" id="formSucesso">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <h2>Senha redefinida!</h2>
+                <p class="subtitle">Sua senha foi alterada com sucesso. Redirecionando para o login...</p>
+
+                <a href="login.html" class="btn-auth btn-auth-link">
+                    <i class="fas fa-sign-in-alt"></i> Ir para Login
+                </a>
+            </div>
+
+            <!-- Loading overlay -->
+            <div id="loadingOverlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Processando...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="esqueci-senha.js"></script>
+</body>
+</html>

@@ -165,7 +165,10 @@ async function verificarEmail(req, res) {
                     nome: usuario.nome,
                     email: usuario.email,
                     tipo: usuario.tipo_usuario
-                }
+                },
+                redirecionamento: usuario.tipo_usuario === 'especialista' 
+                    ? '/especialista-dashboard.html' 
+                    : '/index.html'
             }
         });
 
@@ -316,7 +319,10 @@ async function verificarLoginOTP(req, res) {
                     email: usuario.email,
                     tipo: usuario.tipo_usuario,
                     foto_perfil: usuario.foto_perfil
-                }
+                },
+                redirecionamento: usuario.tipo_usuario === 'especialista' 
+                    ? '/especialista-dashboard.html' 
+                    : '/index.html'
             }
         });
 

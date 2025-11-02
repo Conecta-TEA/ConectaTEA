@@ -41,6 +41,28 @@ async function carregarPerfil() {
         // Atualizar nome no header
         document.getElementById('headerUserName').textContent = usuario.nome || 'Usuário';
 
+        // Carregar foto de perfil no header
+        const headerProfileImage = document.getElementById('headerProfileImage');
+        const headerProfileIcon = document.getElementById('headerProfileIcon');
+        
+        if (usuario.foto_perfil) {
+            // Se a foto já tem http://, usa direto; senão, adiciona o backend URL
+            let fotoPath = usuario.foto_perfil;
+            // Remove barra inicial se existir
+            if (fotoPath.startsWith('/')) {
+                fotoPath = fotoPath.substring(1);
+            }
+            const fotoUrl = fotoPath.startsWith('http') 
+                ? fotoPath 
+                : `http://localhost:3000/${fotoPath}`;
+            headerProfileImage.src = fotoUrl;
+            headerProfileImage.style.display = 'block';
+            headerProfileIcon.style.display = 'none';
+        } else {
+            headerProfileImage.style.display = 'none';
+            headerProfileIcon.style.display = 'block';
+        }
+
         // Avatar - foto ou inicial
         const avatarDiv = document.getElementById('perfilAvatar');
         if (usuario.foto_perfil) {

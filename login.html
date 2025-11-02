@@ -52,6 +52,12 @@
                     <button type="submit" class="btn-auth">
                         <i class="fas fa-sign-in-alt"></i> Entrar
                     </button>
+
+                    <div class="forgot-password-link">
+                        <a href="esqueci-senha.html">
+                            <i class="fas fa-key"></i> Esqueci minha senha
+                        </a>
+                    </div>
                 </form>
 
                 <div class="auth-footer">
@@ -71,7 +77,12 @@
     <script>
         // Verificar se já está logado
         if (localStorage.getItem('token')) {
-            window.location.href = 'index.html';
+            const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+            if (usuario.tipo_usuario === 'especialista') {
+                window.location.href = 'especialista-dashboard.html';
+            } else {
+                window.location.href = 'index.html';
+            }
         }
     </script>
 </body>

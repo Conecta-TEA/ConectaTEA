@@ -234,6 +234,44 @@
     color: #ec4899;
 }
 
+.forgot-password-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.forgot-password-link a {
+    color: #a855f7;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.forgot-password-link a:hover {
+    color: #ec4899;
+    text-decoration: underline;
+}
+
+.code-input {
+    text-align: center !important;
+    font-size: 24px !important;
+    letter-spacing: 5px !important;
+    font-weight: 600 !important;
+}
+
+.code-hint {
+    color: #64748b;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.btn-auth-link {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
 .resend-section {
     text-align: center;
     margin-top: 25px;

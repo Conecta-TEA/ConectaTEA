@@ -96,7 +96,15 @@ if (formLogin) {
 
                 // Redirecionar após 1 segundo
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    // Verificar se há redirecionamento específico ou usar o tipo de usuário
+                    const usuario = data.usuario;
+                    if (data.redirecionamento) {
+                        window.location.href = data.redirecionamento;
+                    } else if (usuario && usuario.tipo_usuario === 'especialista') {
+                        window.location.href = 'especialista-dashboard.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 }, 1000);
             } else {
                 mostrarAlerta('error', data.mensagem || 'Email ou senha incorretos', document.querySelector('#formLogin').parentElement);
@@ -172,7 +180,15 @@ if (formCadastro) {
 
                 // Redirecionar após 1 segundo
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    // Verificar se há redirecionamento específico ou usar o tipo de usuário
+                    const usuario = data.usuario;
+                    if (data.redirecionamento) {
+                        window.location.href = data.redirecionamento;
+                    } else if (usuario && usuario.tipo_usuario === 'especialista') {
+                        window.location.href = 'especialista-dashboard.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 }, 1000);
             } else {
                 mostrarAlerta('error', data.mensagem || 'Erro ao criar conta', formContainer);
