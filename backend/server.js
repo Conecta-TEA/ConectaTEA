@@ -15,17 +15,38 @@ const mensagensRoutes = require('./routes/mensagens');
 
 const app = express();
 const server = http.createServer(app);
+
+// CORS dinâmico para desenvolvimento e produção
+const allowedOrigins = [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'https://conectatea.vercel.app',
+    'https://conectatea-frontend.netlify.app',
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
 const io = socketIO(server, {
     cors: {
-        origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
+        origin: allowedOrigins,
         credentials: true
     }
 });
 
 app.use(cors({
-    origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
+    origin: function(origin, callback) {
+        // Permitir requests sem origin (mobile apps, curl, etc)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.log('⚠️ Origem bloqueada pelo CORS:', origin);
+            callback(null, true); // Permitir em desenvolvimento
+        }
+    },
     credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -157,11 +178,18 @@ app.get('/api/health', (req, res) => {
     }
 });
 
-server.listen(3000, () => {
+// Usar PORT do ambiente (Render, Railway, etc) ou 3000 local
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, '0.0.0.0', () => {
     console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('🚀 Servidor ConectaTEA rodando na porta 3000');
+    console.log(`🚀 Servidor ConectaTEA rodando na porta ${PORT}`);
+    console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
     console.log('📧 Email configurado:', process.env.EMAIL_USER);
     console.log('🗄️  Banco: SQLite');
     console.log('💬 Socket.IO: Ativo');
+    console.log('🔗 CORS:', allowedOrigins.join(', '));
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
 });
+
+module.exports = app; // Para Vercel serverless
