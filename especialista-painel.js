@@ -4,6 +4,91 @@ let usuario = null;
 let token = null;
 let socket = null;
 
+// MODO DEMONSTRAÇÃO - Sem necessidade de backend
+const MODO_DEMO = true;
+
+// Dados fictícios para demonstração
+const DADOS_DEMO = {
+    pacientes: [
+        {
+            id: 1,
+            nome: 'Maria Silva',
+            email: 'maria@email.com',
+            idade: 8,
+            data_vinculo: '2024-01-15',
+            observacoes: 'Paciente com diagnóstico de TEA leve'
+        },
+        {
+            id: 2,
+            nome: 'João Santos',
+            email: 'joao@email.com',
+            idade: 10,
+            data_vinculo: '2024-02-20',
+            observacoes: 'Acompanhamento semanal'
+        },
+        {
+            id: 3,
+            nome: 'Ana Costa',
+            email: 'ana@email.com',
+            idade: 6,
+            data_vinculo: '2024-03-10',
+            observacoes: 'Primeira consulta realizada'
+        }
+    ],
+    reunioes: [
+        {
+            id: 1,
+            paciente_id: 1,
+            paciente_nome: 'Maria Silva',
+            titulo: 'Consulta de Acompanhamento',
+            data_hora: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // Daqui 2h
+            duracao: 60,
+            status: 'agendada',
+            link_meet: 'https://meet.google.com/abc-defg-hij'
+        },
+        {
+            id: 2,
+            paciente_id: 2,
+            paciente_nome: 'João Santos',
+            titulo: 'Avaliação Mensal',
+            data_hora: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Amanhã
+            duracao: 90,
+            status: 'agendada',
+            link_meet: 'https://meet.google.com/xyz-uvwx-rst'
+        }
+    ],
+    prontuarios: [
+        {
+            id: 1,
+            paciente_id: 1,
+            paciente_nome: 'Maria Silva',
+            titulo: 'Avaliação Inicial',
+            tipo: 'avaliacao',
+            conteudo: 'Paciente apresenta comunicação verbal limitada. Demonstra interesse por atividades estruturadas.',
+            data: '2024-01-15'
+        },
+        {
+            id: 2,
+            paciente_id: 1,
+            paciente_nome: 'Maria Silva',
+            titulo: 'Evolução - Sessão 5',
+            tipo: 'evolucao',
+            conteudo: 'Melhora significativa na interação social. Consegue manter contato visual por períodos mais longos.',
+            data: '2024-02-10'
+        }
+    ],
+    mensagens: [
+        {
+            id: 1,
+            remetente_id: 1,
+            destinatario_id: 2,
+            mensagem: 'Olá, gostaria de remarcar a consulta.',
+            lido: false,
+            criado_em: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+        }
+    ]
+};
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     verificarAutenticacao();
@@ -53,6 +138,11 @@ function carregarDadosUsuario() {
 
 // Conectar Socket.IO
 function conectarSocket() {
+    if (MODO_DEMO) {
+        console.log('Modo Demo: Socket.IO desabilitado');
+        return;
+    }
+    
     socket = io('http://localhost:3000');
     
     socket.on('connect', () => {
@@ -119,6 +209,20 @@ function trocarPagina(pagina) {
 
 // Dashboard
 async function carregarDashboard() {
+    if (MODO_DEMO) {
+        // Usar dados demo
+        document.getElementById('statPacientes').textContent = DADOS_DEMO.pacientes.length;
+        document.getElementById('statReunioes').textContent = DADOS_DEMO.reunioes.filter(r => {
+            const hoje = new Date().toDateString();
+            return new Date(r.data_hora).toDateString() === hoje;
+        }).length;
+        document.getElementById('statPendentes').textContent = DADOS_DEMO.reunioes.length;
+        document.getElementById('statMensagens').textContent = DADOS_DEMO.mensagens.filter(m => !m.lida).length;
+        document.getElementById('badgeChat').textContent = DADOS_DEMO.mensagens.filter(m => !m.lida).length;
+        console.log('Dashboard carregado em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/especialista/dashboard/stats`, {
             headers: {
@@ -142,6 +246,13 @@ async function carregarDashboard() {
 
 // Pacientes
 async function carregarPacientes() {
+    if (MODO_DEMO) {
+        // Usar dados demo
+        renderizarPacientes(DADOS_DEMO.pacientes);
+        console.log('Pacientes carregados em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/especialista/pacientes`, {
             headers: {
@@ -213,6 +324,13 @@ function renderizarPacientes(pacientes) {
 
 // Reuniões
 async function carregarReunioes() {
+    if (MODO_DEMO) {
+        // Usar dados demo
+        renderizarReunioes(DADOS_DEMO.reunioes);
+        console.log('Reuniões carregadas em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/especialista/reunioes`, {
             headers: {
@@ -313,6 +431,11 @@ async function editarReuniao(reuniaoId) {
 async function cancelarReuniao(reuniaoId) {
     if (!confirm('Deseja realmente cancelar esta reunião?')) return;
     
+    if (MODO_DEMO) {
+        alert('✅ Reunião cancelada com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/especialista/reunioes/${reuniaoId}`, {
             method: 'DELETE',
@@ -334,6 +457,19 @@ async function cancelarReuniao(reuniaoId) {
 
 // Chat
 async function carregarChat() {
+    if (MODO_DEMO) {
+        // Usar dados demo - criar conversas a partir das mensagens
+        const conversas = DADOS_DEMO.mensagens.map(msg => ({
+            contato_id: msg.remetente_id,
+            contato_nome: msg.remetente_nome,
+            ultima_mensagem: msg.conteudo,
+            nao_lidas: msg.lida ? 0 : 1
+        }));
+        renderizarConversas(conversas);
+        console.log('Chat carregado em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/mensagens/conversas`, {
             headers: {
@@ -389,6 +525,13 @@ function inicializarFormularios() {
     document.getElementById('formVincular')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        if (MODO_DEMO) {
+            alert('✅ Paciente vinculado com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
+            fecharModal('modalVincular');
+            e.target.reset();
+            return;
+        }
+        
         const email = document.getElementById('emailPaciente').value;
         const observacoes = document.getElementById('observacoes').value;
         
@@ -417,6 +560,13 @@ function inicializarFormularios() {
     // Agendar reunião
     document.getElementById('formReuniao')?.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        if (MODO_DEMO) {
+            alert('✅ Reunião agendada com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
+            fecharModal('modalReuniao');
+            e.target.reset();
+            return;
+        }
         
         const dados = {
             paciente_id: document.getElementById('pacienteReuniao').value,
@@ -469,6 +619,20 @@ function fecharModal(modalId) {
 }
 
 async function carregarPacientesSelect() {
+    if (MODO_DEMO) {
+        // Usar dados demo
+        const selects = ['pacienteReuniao', 'pacienteProntuario', 'selectPacienteProntuario'];
+        selects.forEach(selectId => {
+            const select = document.getElementById(selectId);
+            if (select) {
+                select.innerHTML = '<option value="">Selecione um paciente</option>' +
+                    DADOS_DEMO.pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+            }
+        });
+        console.log('Pacientes (select) carregados em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/especialista/pacientes`, {
             headers: {
@@ -510,6 +674,14 @@ let conversaAtiva = null;
 
 async function abrirConversa(contatoId) {
     conversaAtiva = contatoId;
+    
+    if (MODO_DEMO) {
+        // Usar dados demo - filtrar mensagens do contato
+        const mensagensFiltradas = DADOS_DEMO.mensagens.filter(m => m.remetente_id === contatoId);
+        renderizarMensagens(mensagensFiltradas);
+        console.log('Conversa carregada em modo demo');
+        return;
+    }
     
     try {
         const response = await fetch(`${API_URL}/mensagens/conversa/${contatoId}`, {
@@ -568,6 +740,14 @@ async function enviarMensagem() {
     
     if (!texto || !conversaAtiva) return;
     
+    if (MODO_DEMO) {
+        // Simular envio no modo demo
+        document.getElementById('mensagemTexto').value = '';
+        alert('✅ Mensagem enviada!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
+        console.log('Mensagem enviada em modo demo');
+        return;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/mensagens/enviar`, {
             method: 'POST',
@@ -625,6 +805,14 @@ async function carregarProntuariosPaciente() {
     
     if (!pacienteId) {
         document.getElementById('prontuariosLista').innerHTML = '';
+        return;
+    }
+    
+    if (MODO_DEMO) {
+        // Usar dados demo - filtrar prontuários do paciente selecionado
+        const prontuariosFiltrados = DADOS_DEMO.prontuarios.filter(p => p.paciente_id == pacienteId);
+        renderizarProntuarios(prontuariosFiltrados);
+        console.log('Prontuários carregados em modo demo');
         return;
     }
     
@@ -697,6 +885,13 @@ function imprimirProntuario(prontuarioId) {
 // Form Prontuário
 document.getElementById('formProntuario')?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    if (MODO_DEMO) {
+        alert('✅ Prontuário salvo com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
+        fecharModal('modalProntuario');
+        e.target.reset();
+        return;
+    }
     
     const dados = {
         paciente_id: document.getElementById('pacienteProntuario').value,
