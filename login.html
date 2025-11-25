@@ -73,10 +73,105 @@
         </div>
     </div>
 
-    <script src="auth.js"></script>
+    <!-- POPUP DE DEMONSTRAÇÃO -->
+    <div id="popupDemo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s;">
+        <div style="background: white; padding: 3rem; border-radius: 20px; max-width: 550px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.4s;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-puzzle-piece" style="font-size: 2.5rem; color: white;"></i>
+            </div>
+            <h2 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.8rem;">🎉 Modo Demonstração</h2>
+            <p style="color: #718096; margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.6;">
+                O backend ainda está sendo configurado.<br>
+                <strong>Escolha como deseja explorar a plataforma:</strong>
+            </p>
+            
+            <!-- Grid de botões -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <!-- Botão Especialista -->
+                <button onclick="irParaEspecialista()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.2rem 1.5rem; border: none; border-radius: 15px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-user-md" style="font-size: 2rem;"></i>
+                    <span>Painel do<br>Especialista</span>
+                </button>
+                
+                <!-- Botão Usuário -->
+                <button onclick="irParaUsuario()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; padding: 1.2rem 1.5rem; border: none; border-radius: 15px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4); transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-user" style="font-size: 2rem;"></i>
+                    <span>Área do<br>Usuário</span>
+                </button>
+            </div>
+            
+            <p style="color: #a0aec0; margin-top: 0.5rem; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Todas as funcionalidades visuais estão disponíveis
+            </p>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        #popupDemo button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+    </style>
+
     <script>
+        // MODO DEMONSTRAÇÃO - Sem necessidade de backend
+        const MODO_DEMO = true;
+
+        // Mostrar popup de demonstração ao carregar
+        if (MODO_DEMO) {
+            setTimeout(() => {
+                document.getElementById('popupDemo').style.display = 'flex';
+            }, 500);
+        }
+
+        // Função para ir para o painel do especialista (modo demo)
+        function irParaEspecialista() {
+            // Criar dados de especialista fake para demonstração
+            const usuarioDemo = {
+                id: 1,
+                nome: 'Dr. Especialista Demo',
+                email: 'demo@conectatea.com',
+                tipo_usuario: 'especialista',
+                foto_perfil: 'https://via.placeholder.com/150'
+            };
+            
+            // Salvar no localStorage para o dashboard funcionar
+            localStorage.setItem('token', 'demo-token-123456');
+            localStorage.setItem('usuario', JSON.stringify(usuarioDemo));
+            
+            // Redirecionar para o dashboard do especialista
+            window.location.href = 'especialista-dashboard.html';
+        }
+
+        // Função para ir para a área do usuário (modo demo)
+        function irParaUsuario() {
+            // Criar dados de usuário fake para demonstração
+            const usuarioDemo = {
+                id: 2,
+                nome: 'Usuário Demo',
+                email: 'usuario@conectatea.com',
+                tipo_usuario: 'usuario',
+                foto_perfil: 'https://via.placeholder.com/150'
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem('token', 'demo-token-usuario-789');
+            localStorage.setItem('usuario', JSON.stringify(usuarioDemo));
+            
+            // Redirecionar para a página inicial (área do usuário)
+            window.location.href = 'index.html';
+        }
+
         // Verificar se já está logado
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('token') && !MODO_DEMO) {
             const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
             if (usuario.tipo_usuario === 'especialista') {
                 window.location.href = 'especialista-dashboard.html';
@@ -84,6 +179,17 @@
                 window.location.href = 'index.html';
             }
         }
+
+        // Desabilitar formulário de login no modo demo
+        if (MODO_DEMO) {
+            document.getElementById('formLogin').addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.getElementById('popupDemo').style.display = 'flex';
+            });
+        }
     </script>
+
+    <!-- Script original de autenticação (desabilitado no modo demo) -->
+    <!-- <script src="auth.js"></script> -->
 </body>
 </html>

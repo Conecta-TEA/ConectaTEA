@@ -13,124 +13,129 @@
 - ✅ **Dashboard** com histórico de consultas
 
 ### 👨‍⚕️ Para Especialistas
-- ✅ **Perfil Profissional** com especialidades
-- ✅ **Gerenciamento de Consultas** agendadas
-- ✅ **Histórico de Atendimentos**
-- ✅ **Comunicação com Pacientes**
+- ✅ **Dashboard Profissional** completo e elegante
+- ✅ **Gerenciamento de Pacientes** com prontuários digitais
+- ✅ **Agenda Integrada** com calendário visual
+- ✅ **Google Meet** integrado para consultas online
+- ✅ **Chat em tempo real** com pacientes
+- ✅ **Sistema de Reuniões** com histórico
+- ✅ **Estatísticas e Métricas** do consultório
 
 ### 🛠️ Tecnologias
-- **Backend**: Node.js 14+ com Express 4.18.2
-- **Banco de Dados**: MySQL 5.7+ com mysql2
+- **Backend**: Node.js + Express
+- **Database Dev**: SQLite (automático, zero config)
+- **Database Prod**: PostgreSQL (Supabase, grátis)
 - **Autenticação**: JWT + OTP via email (Nodemailer)
-- **Segurança**: bcryptjs, sessões JWT, auditoria completa
-- **Frontend**: HTML5, CSS3, JavaScript vanilla, Font Awesome 6.4.0
+- **Real-time**: Socket.IO (chat)
+- **Segurança**: bcryptjs, prepared statements
+- **Frontend**: HTML5, CSS3, JavaScript ES6+, Font Awesome 6.4.0
+- **Deploy**: Vercel (frontend + serverless backend)
 
-## 🚀 Como Rodar
+## 🚀 Como Rodar Localmente
 
 ### Requisitos
-- **Node.js** 14 ou superior
-- **MySQL** 5.7 ou superior
+- **Node.js** 18+ e npm 9+
+- **Git**
 - **Conta Gmail** para envio de emails OTP
-- Navegador moderno (Chrome, Firefox, Edge)
 
-### Instalação do Backend
+### Instalação
 
-1. **Instalar dependências**
-```powershell
+1. **Clone o repositório**
+```bash
+git clone https://github.com/Conecta-TEA/ConectaTEA.git
+cd ConectaTEA
+```
+
+2. **Instalar dependências**
+```bash
 cd backend
 npm install
 ```
 
-2. **Configurar banco de dados**
-```sql
-CREATE DATABASE conectatea;
-```
-
-```powershell
-mysql -u root -p conectatea < database.sql
-```
-
 3. **Configurar variáveis de ambiente**
 
-Edite o arquivo `backend/.env`:
+Crie o arquivo `backend/.env`:
 ```env
-PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=sua_senha
-DB_NAME=conectatea
-JWT_SECRET=sua_chave_secreta_super_segura
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=seu-email@gmail.com
-EMAIL_PASSWORD=sua_senha_app_gmail
-FRONTEND_URL=http://localhost:5500
+EMAIL_USER=seu_email@gmail.com
+EMAIL_PASS=sua_senha_app_gmail
+JWT_SECRET=seu_segredo_jwt_aqui
+SESSION_SECRET=seu_segredo_sessao_aqui
 ```
 
-**⚠️ Gmail App Password**: Acesse https://myaccount.google.com/apppasswords para gerar
+**⚠️ Gmail App Password**: 
+1. Acesse: https://myaccount.google.com/security
+2. Ative: Verificação em 2 etapas
+3. Gere App Password em: https://myaccount.google.com/apppasswords
+4. Use os 16 dígitos em `EMAIL_PASS`
 
-4. **Iniciar servidor backend**
-```powershell
-cd backend
+4. **Iniciar servidor**
+```bash
 npm start
 ```
 
-### Frontend
+O banco SQLite será criado automaticamente em `backend/conectatea.db`
 
-1. **Abrir com Live Server**
-   - Instale a extensão Live Server no VS Code
-   - Clique com botão direito em `index.html`
-   - Selecione "Open with Live Server"
-   - Acesse: http://localhost:5500
+5. **Abrir frontend**
+```bash
+# Instale Live Server no VS Code
+# Clique com botão direito em index.html
+# "Open with Live Server"
+# Acesse: http://localhost:5500
+```
+
+### Login Padrão
+
+```
+Email: admin@conectatea.com
+Senha: Admin123!
+Tipo: especialista
+```
 
 ## 📁 Estrutura do Projeto
 
 ```
 ConectaTEA/
-├── backend/                    # Backend Node.js
+├── backend/
 │   ├── config/
-│   │   ├── database.js        # Conexão MySQL
-│   │   └── email.js           # Configuração Nodemailer
-│   ├── controllers/
-│   │   ├── authController.js  # Autenticação OTP
-│   │   ├── usuarioController.js # CRUD usuários
-│   │   └── consultaController.js # CRUD consultas
-│   ├── middleware/
-│   │   └── auth.js            # Verificação JWT
+│   │   ├── database-sqlite.js      # SQLite (desenvolvimento)
+│   │   ├── database-postgres.js    # PostgreSQL (produção)
+│   │   └── db-selector.js          # Seletor automático
 │   ├── routes/
-│   │   ├── authRoutes.js      # Rotas de autenticação
-│   │   ├── usuarioRoutes.js   # Rotas de usuários
-│   │   └── consultaRoutes.js  # Rotas de consultas
-│   ├── utils/
-│   │   └── otp.js             # Geração de códigos
-│   ├── .env                   # Variáveis de ambiente
-│   ├── database.sql           # Schema do banco
-│   ├── package.json           # Dependências
-│   ├── server.js              # Servidor Express
-│   └── README.md              # Documentação da API
-│
-├── index.html                 # Página inicial
-├── especialistas.html         # Lista de especialistas
-├── consultas.html             # Agendamento
-├── recursos.html              # Recursos educacionais
-├── login.html                 # Login com OTP
-├── cadastro.html              # Cadastro de usuário
-├── styles.css                 # Estilos globais
-├── auth.css                   # Estilos de autenticação
-├── auth.js                    # Lógica de login/cadastro
-├── session.js                 # Gerenciamento de sessão
-└── README.md                  # Este arquivo
+│   │   ├── auth-simple.js          # Autenticação + OTP
+│   │   ├── especialista.js         # API Dashboard Especialista
+│   │   ├── usuarios.js             # Gerenciamento usuários
+│   │   ├── chat.js                 # Chat em tempo real
+│   │   └── mensagens.js            # Sistema de mensagens
+│   ├── .env                        # Variáveis ambiente (criar)
+│   ├── server.js                   # Servidor Express + Socket.IO
+│   └── package.json
+├── css/
+│   ├── style.css                   # Estilos globais
+│   ├── painel-especialista.css     # Dashboard especialista
+│   └── ...
+├── js/
+│   ├── config.js                   # Configuração ambiente
+│   ├── painel-especialista.js      # Lógica dashboard
+│   └── ...
+├── index.html                      # Página inicial
+├── painel-especialista.html        # Dashboard especialista
+├── vercel.json                     # Config deploy Vercel
+├── DEPLOY-15MIN.md                 # Guia rápido deploy
+├── DEPLOY-VERCEL-GRATIS.md         # Guia completo deploy
+├── CHECKLIST-DEPLOY.md             # Checklist deploy
+└── README.md                       # Este arquivo
 ```
 
-## 🎨 Identidade Visual
+## 🎨 Design
 
-A plataforma possui um **Design System completo** com:
-- Paleta de cores moderna (azul/roxo/cyan)
-- Tipografia elegante (Inter)
-- Componentes reutilizáveis (cards, botões, formulários)
-- Animações suaves e responsivas
-- Gradientes e sombras profissionais
-- Layout mobile-first
+O projeto possui um **design elegante e premium** com:
+- 🎨 Paleta sofisticada (Azul marinho #1e3a8a + Dourado #B8956F)
+- ✨ Animações suaves e transições elegantes
+- 📱 100% responsivo (mobile-first)
+- ♿ Acessível (WCAG 2.1)
+- 🌙 Interface limpa e profissional
+- 💎 Cards com glassmorphism
+- 🎯 UX otimizada para especialistas
 
 ## 🔐 Segurança
 
@@ -143,35 +148,42 @@ A plataforma possui um **Design System completo** com:
 - ✅ **Auditoria completa** de ações no banco
 - ✅ **CORS configurado** para domínios permitidos
 
-## 📊 Banco de Dados
+## 🗄️ Banco de Dados
 
-### Tabelas (8 no total)
-- **usuarios**: Contas de usuários (pacientes, especialistas, admin)
-- **otp_codes**: Códigos de verificação temporários
-- **especialistas**: Perfis profissionais com especialidades
-- **consultas**: Agendamentos e histórico de atendimentos
-- **recursos**: Biblioteca de conteúdo educacional
-- **atividades**: Atividades terapêuticas personalizadas
+O projeto usa **dual-database** (automático):
+- **Desenvolvimento**: SQLite (zero config, arquivo local)
+- **Produção**: PostgreSQL (Supabase, 500MB grátis)
+
+O sistema detecta automaticamente qual usar baseado na variável `DATABASE_URL`.
+
+### Tabelas Principais
+- **usuarios**: Pacientes, especialistas e admins
+- **otp_codes**: Códigos de verificação (6 dígitos)
+- **especialista_pacientes**: Relação especialista-paciente
+- **reunioes**: Agendamentos + Google Meet
+- **prontuarios**: Prontuários digitais
+- **mensagens**: Chat em tempo real
 - **sessoes**: Tokens JWT ativos
-- **auditoria**: Log completo de todas as ações
 
-## � Sistema de Emails
+Veja SQL completo em: `DEPLOY-VERCEL-GRATIS.md`
 
-O sistema envia emails HTML estilizados para:
+## 📧 Sistema de Emails
 
-### 1. Verificação de Cadastro
-- **Assunto**: "Bem-vindo ao ConectaTEA - Verifique seu Email"
-- **Conteúdo**: Código de 6 dígitos para ativar conta
+Envio automático de emails HTML estilizados para:
 
-### 2. Login com OTP
-- **Assunto**: "Seu Código de Acesso - ConectaTEA"
-- **Conteúdo**: Código de 6 dígitos para fazer login
+### OTP de Cadastro
+```
+Assunto: "Bem-vindo ao ConectaTEA - Verifique seu Email"
+Conteúdo: Código de 6 dígitos (válido por 10 min)
+```
 
-### 3. Recuperação de Senha
-- **Assunto**: "Redefinir Senha - ConectaTEA"
-- **Conteúdo**: Código de 6 dígitos para criar nova senha
+### OTP de Login
+```
+Assunto: "Seu Código de Acesso - ConectaTEA"
+Conteúdo: Código de 6 dígitos (válido por 10 min)
+```
 
-Todos os emails seguem o design system da plataforma com gradientes roxo/rosa.
+Todos com design elegante matching da plataforma.
 
 ## 🔌 API Endpoints
 
@@ -200,31 +212,40 @@ Todos os emails seguem o design system da plataforma com gradientes roxo/rosa.
 
 Documentação completa em `backend/README.md`
 
-## 🚢 Deploy
+## � Deploy (100% GRÁTIS)
 
-### Backend (Node.js)
-- **Heroku**: `git push heroku main`
-- **Railway**: Deploy automático via GitHub
-- **Render**: Deploy com MySQL gerenciado
-- **VPS**: PM2 + Nginx + MySQL
+O projeto está configurado para deploy **totalmente gratuito** na Vercel + Supabase!
 
-### Frontend (Estático)
-- **Vercel**: Deploy gratuito
-- **Netlify**: CI/CD integrado
-- **GitHub Pages**: Apenas frontend estático
-- **Cloudflare Pages**: Performance global
+### ⚡ Opção 1: Deploy Rápido (15 minutos)
+```bash
+📖 Siga o guia: DEPLOY-15MIN.md
+```
 
-### Checklist de Deploy
-- [ ] Configurar variáveis de ambiente (.env) no servidor
-- [ ] Ativar HTTPS (SSL/TLS)
-- [ ] Configurar backups automáticos do MySQL
-- [ ] Implementar rate limiting nas rotas
-- [ ] Adicionar monitoring (logs, uptime)
-- [ ] Configurar domínio personalizado
-- [ ] Otimizar assets (minify CSS/JS)
-- [ ] Configurar CDN para static files
-- [ ] Testar envio de emails em produção
-- [ ] Alterar senha do usuário admin padrão
+### 📚 Opção 2: Deploy Completo (com todos os detalhes)
+```bash
+📖 Siga o guia: DEPLOY-VERCEL-GRATIS.md
+```
+
+### ✅ Opção 3: Checklist Passo a Passo
+```bash
+📖 Siga o guia: CHECKLIST-DEPLOY.md
+```
+
+### 🛠️ Infraestrutura
+- **Frontend**: Vercel (CDN global, SSL automático)
+- **Backend**: Vercel Serverless Functions
+- **Database**: Supabase PostgreSQL (500MB grátis)
+- **CI/CD**: GitHub → Vercel (deploy automático)
+
+### 💰 Limites Free Tier
+- ✅ 100GB bandwidth/mês (Vercel)
+- ✅ 500MB database (Supabase)
+- ✅ 2GB bandwidth database/mês
+- ✅ Deployments ilimitados
+- ✅ SSL automático
+- ✅ Suficiente para milhares de usuários!
+
+**Custo total: R$ 0,00/mês** 🎯
 
 ## 👤 Usuário Admin Padrão
 

@@ -1,0 +1,16 @@
+{
+    "name": "conectatea/backend-php",
+    "description": "Backend PHP simples para ConectaTEA",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "files": [
+            "config/database.php",
+            "config/email.php",
+            "includes/functions.php"
+        ]
+    }
+}

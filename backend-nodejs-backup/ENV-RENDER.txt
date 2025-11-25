@@ -1,0 +1,45 @@
+# ============================================
+# VARIÁVEIS DE AMBIENTE - RENDER.COM
+# ============================================
+# Copie e cole essas variáveis no painel do Render
+# Settings → Environment → Add Environment Variable
+
+# Ambiente
+NODE_ENV=production
+
+# Porta (Render define automaticamente, não precisa configurar)
+# PORT=3000
+
+# Email (Configure com seu Gmail)
+EMAIL_USER=seu_email@gmail.com
+EMAIL_PASS=sua_senha_de_app_do_gmail
+
+# JWT Secret (Gere uma chave forte - use: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+JWT_SECRET=sua_chave_secreta_super_forte_aqui_minimo_32_caracteres
+
+# Session Secret
+SESSION_SECRET=outra_chave_secreta_para_sessoes_minimo_32_caracteres
+
+# Frontend URL (para CORS)
+FRONTEND_URL=https://conectatea.vercel.app
+
+# Database (SQLite - criado automaticamente)
+DB_PATH=./data/conectatea.db
+
+# ============================================
+# COMO GERAR SENHA DE APP DO GMAIL:
+# ============================================
+# 1. Acesse: https://myaccount.google.com/security
+# 2. Ative "Verificação em duas etapas"
+# 3. Em "Senhas de app", gere uma nova senha
+# 4. Selecione "App: Outro (nome personalizado)"
+# 5. Digite: ConectaTEA Backend
+# 6. Copie a senha gerada (16 caracteres)
+# 7. Cole em EMAIL_PASS
+
+# ============================================
+# GERAR CHAVES SECRETAS:
+# ============================================
+# Execute no terminal:
+# node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# Use a saída para JWT_SECRET e SESSION_SECRET

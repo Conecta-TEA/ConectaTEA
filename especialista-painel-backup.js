@@ -4,91 +4,6 @@ let usuario = null;
 let token = null;
 let socket = null;
 
-// MODO DEMONSTRAÇÃO - Sem necessidade de backend
-const MODO_DEMO = true;
-
-// Dados fictícios para demonstração
-const DADOS_DEMO = {
-    pacientes: [
-        {
-            id: 1,
-            nome: 'Maria Silva',
-            email: 'maria@email.com',
-            idade: 8,
-            data_vinculo: '2024-01-15',
-            observacoes: 'Paciente com diagnóstico de TEA leve'
-        },
-        {
-            id: 2,
-            nome: 'João Santos',
-            email: 'joao@email.com',
-            idade: 10,
-            data_vinculo: '2024-02-20',
-            observacoes: 'Acompanhamento semanal'
-        },
-        {
-            id: 3,
-            nome: 'Ana Costa',
-            email: 'ana@email.com',
-            idade: 6,
-            data_vinculo: '2024-03-10',
-            observacoes: 'Primeira consulta realizada'
-        }
-    ],
-    reunioes: [
-        {
-            id: 1,
-            paciente_id: 1,
-            paciente_nome: 'Maria Silva',
-            titulo: 'Consulta de Acompanhamento',
-            data_hora: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // Daqui 2h
-            duracao: 60,
-            status: 'agendada',
-            link_meet: 'https://meet.google.com/abc-defg-hij'
-        },
-        {
-            id: 2,
-            paciente_id: 2,
-            paciente_nome: 'João Santos',
-            titulo: 'Avaliação Mensal',
-            data_hora: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Amanhã
-            duracao: 90,
-            status: 'agendada',
-            link_meet: 'https://meet.google.com/xyz-uvwx-rst'
-        }
-    ],
-    prontuarios: [
-        {
-            id: 1,
-            paciente_id: 1,
-            paciente_nome: 'Maria Silva',
-            titulo: 'Avaliação Inicial',
-            tipo: 'avaliacao',
-            conteudo: 'Paciente apresenta comunicação verbal limitada. Demonstra interesse por atividades estruturadas.',
-            data: '2024-01-15'
-        },
-        {
-            id: 2,
-            paciente_id: 1,
-            paciente_nome: 'Maria Silva',
-            titulo: 'Evolução - Sessão 5',
-            tipo: 'evolucao',
-            conteudo: 'Melhora significativa na interação social. Consegue manter contato visual por períodos mais longos.',
-            data: '2024-02-10'
-        }
-    ],
-    mensagens: [
-        {
-            id: 1,
-            remetente_id: 1,
-            destinatario_id: 2,
-            mensagem: 'Olá, gostaria de remarcar a consulta.',
-            lido: false,
-            criado_em: new Date(Date.now() - 30 * 60 * 1000).toISOString()
-        }
-    ]
-};
-
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     verificarAutenticacao();
@@ -138,11 +53,6 @@ function carregarDadosUsuario() {
 
 // Conectar Socket.IO
 function conectarSocket() {
-    if (MODO_DEMO) {
-        console.log('Modo Demo: Socket.IO desabilitado');
-        return;
-    }
-    
     socket = io('http://localhost:3000');
     
     socket.on('connect', () => {
@@ -209,20 +119,6 @@ function trocarPagina(pagina) {
 
 // Dashboard
 async function carregarDashboard() {
-    if (MODO_DEMO) {
-        // Usar dados demo
-        document.getElementById('statPacientes').textContent = DADOS_DEMO.pacientes.length;
-        document.getElementById('statReunioes').textContent = DADOS_DEMO.reunioes.filter(r => {
-            const hoje = new Date().toDateString();
-            return new Date(r.data_hora).toDateString() === hoje;
-        }).length;
-        document.getElementById('statPendentes').textContent = DADOS_DEMO.reunioes.length;
-        document.getElementById('statMensagens').textContent = DADOS_DEMO.mensagens.filter(m => !m.lida).length;
-        document.getElementById('badgeChat').textContent = DADOS_DEMO.mensagens.filter(m => !m.lida).length;
-        console.log('Dashboard carregado em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/especialista/dashboard/stats`, {
             headers: {
@@ -246,13 +142,6 @@ async function carregarDashboard() {
 
 // Pacientes
 async function carregarPacientes() {
-    if (MODO_DEMO) {
-        // Usar dados demo
-        renderizarPacientes(DADOS_DEMO.pacientes);
-        console.log('Pacientes carregados em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/especialista/pacientes`, {
             headers: {
@@ -274,63 +163,36 @@ function renderizarPacientes(pacientes) {
     const grid = document.getElementById('pacientesGrid');
     
     if (pacientes.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <i class="fas fa-users"></i>
-                <h3>Nenhum paciente vinculado</h3>
-                <p>Clique no botão acima para vincular seu primeiro paciente</p>
-            </div>
-        `;
+        grid.innerHTML = '<p style="text-align: center; color: #718096;">Nenhum paciente vinculado ainda.</p>';
         return;
     }
     
-    grid.innerHTML = pacientes.map(paciente => {
-        const iniciais = paciente.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        const dataDe = paciente.data_vinculo ? new Date(paciente.data_vinculo).toLocaleDateString('pt-BR') : 'Recente';
-        
-        return `
-            <div class="paciente-card">
-                <div class="paciente-header">
-                    <div class="paciente-avatar">${iniciais}</div>
-                    <div class="paciente-info">
-                        <h3>${paciente.nome}</h3>
-                        <p>${paciente.email}</p>
-                    </div>
-                </div>
-                <div class="paciente-details">
-                    <div class="paciente-detail">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span>Vinculado em ${dataDe}</span>
-                    </div>
-                    ${paciente.telefone ? `
-                        <div class="paciente-detail">
-                            <i class="fas fa-phone"></i>
-                            <span>${paciente.telefone}</span>
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="paciente-actions">
-                    <button class="btn-chat" onclick="abrirChat(${paciente.id})">
-                        <i class="fas fa-comment"></i> Chat
-                    </button>
-                    <button class="btn-prontuario" onclick="verProntuarios(${paciente.id})">
-                        <i class="fas fa-file-medical"></i> Prontuário
-                    </button>
+    grid.innerHTML = pacientes.map(paciente => `
+        <div class="paciente-card">
+            <div class="paciente-header">
+                <img src="${paciente.foto_perfil || 'https://via.placeholder.com/60'}" 
+                     alt="${paciente.nome}" 
+                     class="paciente-foto">
+                <div class="paciente-info">
+                    <h3>${paciente.nome}</h3>
+                    <p>${paciente.email}</p>
+                    <p>Desde: ${new Date(paciente.data_vinculo).toLocaleDateString('pt-BR')}</p>
                 </div>
             </div>
-        `;
-    }).join('');
+            <div class="paciente-acoes">
+                <button class="btn-secondary" onclick="abrirChat(${paciente.id})">
+                    <i class="fas fa-comment"></i> Mensagem
+                </button>
+                <button class="btn-secondary" onclick="verProntuarios(${paciente.id})">
+                    <i class="fas fa-file-medical"></i> Prontuário
+                </button>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Reuniões
 async function carregarReunioes() {
-    if (MODO_DEMO) {
-        // Usar dados demo
-        renderizarReunioes(DADOS_DEMO.reunioes);
-        console.log('Reuniões carregadas em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/especialista/reunioes`, {
             headers: {
@@ -352,124 +214,30 @@ function renderizarReunioes(reunioes) {
     const lista = document.getElementById('reunioesLista');
     
     if (reunioes.length === 0) {
-        lista.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-calendar-times"></i>
-                <h3>Nenhuma reunião agendada</h3>
-                <p>Clique no botão acima para agendar sua primeira reunião</p>
+        lista.innerHTML = '<p style="text-align: center; color: #718096;">Nenhuma reunião agendada.</p>';
+        return;
+    }
+    
+    lista.innerHTML = reunioes.map(reuniao => `
+        <div class="reuniao-card">
+            <div class="reuniao-header">
+                <h3>${reuniao.titulo}</h3>
+                <span class="badge status-${reuniao.status}">${reuniao.status}</span>
             </div>
-        `;
-        return;
-    }
-    
-    lista.innerHTML = reunioes.map(reuniao => {
-        const dataReuniao = new Date(reuniao.data_hora);
-        const googleMeetLink = reuniao.google_meet_link || gerarLinkGoogleMeet(reuniao);
-        
-        return `
-            <div class="reuniao-card">
-                <div class="reuniao-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <div class="reuniao-info">
-                    <h3>${reuniao.titulo}</h3>
-                    <div class="reuniao-meta">
-                        <span><i class="fas fa-user"></i> ${reuniao.paciente_nome}</span>
-                        <span><i class="fas fa-calendar"></i> ${dataReuniao.toLocaleDateString('pt-BR')}</span>
-                        <span><i class="fas fa-clock"></i> ${dataReuniao.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})} (${reuniao.duracao || 60}min)</span>
-                    </div>
-                    ${reuniao.descricao ? `<p class="reuniao-descricao">${reuniao.descricao}</p>` : ''}
-                </div>
-                <div class="reuniao-actions">
-                    <button class="btn-meet" onclick="abrirGoogleMeet('${googleMeetLink}')">
-                        <i class="fab fa-google"></i> Entrar no Meet
-                    </button>
-                    <button class="btn-editar" onclick="editarReuniao(${reuniao.id})">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-cancelar" onclick="cancelarReuniao(${reuniao.id})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-// Gerar link Google Meet automático
-function gerarLinkGoogleMeet(reuniao) {
-    // Pegar link do perfil do especialista ou gerar um genérico
-    const usuarioCompleto = JSON.parse(localStorage.getItem('usuario'));
-    
-    if (usuarioCompleto && usuarioCompleto.google_meet_link) {
-        return usuarioCompleto.google_meet_link;
-    }
-    
-    // Link genérico do Google Meet
-    const codigo = `reuniao-${reuniao.id}-${Date.now()}`;
-    return `https://meet.google.com/new`;
-}
-
-// Abrir Google Meet
-function abrirGoogleMeet(link) {
-    if (!link || link === 'https://meet.google.com/new') {
-        // Criar nova reunião
-        window.open('https://meet.google.com/new', '_blank');
-        return;
-    }
-    
-    // Abrir link específico
-    window.open(link, '_blank');
-}
-
-// Editar reunião
-async function editarReuniao(reuniaoId) {
-    alert('Funcionalidade de edição em desenvolvimento');
-}
-
-// Cancelar reunião
-async function cancelarReuniao(reuniaoId) {
-    if (!confirm('Deseja realmente cancelar esta reunião?')) return;
-    
-    if (MODO_DEMO) {
-        alert('✅ Reunião cancelada com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
-        return;
-    }
-    
-    try {
-        const response = await fetch(`${API_URL}/especialista/reunioes/${reuniaoId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        
-        const result = await response.json();
-        alert(result.mensagem);
-        
-        if (result.sucesso) {
-            carregarReunioes();
-        }
-    } catch (error) {
-        alert('Erro ao cancelar reunião');
-    }
+            <p><i class="fas fa-user"></i> ${reuniao.paciente_nome}</p>
+            <p><i class="fas fa-calendar"></i> ${new Date(reuniao.data_hora).toLocaleString('pt-BR')}</p>
+            <p><i class="fas fa-clock"></i> ${reuniao.duracao} minutos</p>
+            ${reuniao.google_meet_link ? `
+                <a href="${reuniao.google_meet_link}" target="_blank" class="btn-primary">
+                    <i class="fas fa-video"></i> Entrar no Meet
+                </a>
+            ` : ''}
+        </div>
+    `).join('');
 }
 
 // Chat
 async function carregarChat() {
-    if (MODO_DEMO) {
-        // Usar dados demo - criar conversas a partir das mensagens
-        const conversas = DADOS_DEMO.mensagens.map(msg => ({
-            contato_id: msg.remetente_id,
-            contato_nome: msg.remetente_nome,
-            ultima_mensagem: msg.conteudo,
-            nao_lidas: msg.lida ? 0 : 1
-        }));
-        renderizarConversas(conversas);
-        console.log('Chat carregado em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/mensagens/conversas`, {
             headers: {
@@ -491,32 +259,22 @@ function renderizarConversas(conversas) {
     const lista = document.getElementById('conversasLista');
     
     if (conversas.length === 0) {
-        lista.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-comments"></i>
-                <h3>Nenhuma conversa</h3>
-                <p>Suas conversas aparecerão aqui</p>
-            </div>
-        `;
+        lista.innerHTML = '<p style="text-align: center; color: #718096;">Nenhuma conversa ainda.</p>';
         return;
     }
     
-    lista.innerHTML = conversas.map(conversa => {
-        const iniciais = conversa.contato_nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        const ultimaMensagem = conversa.ultima_mensagem || 'Sem mensagens';
-        const temNotificacao = conversa.nao_lidas > 0;
-        
-        return `
-            <div class="conversa-item ${conversaAtiva === conversa.contato_id ? 'active' : ''}" onclick="abrirConversa(${conversa.contato_id})">
-                <div class="conversa-avatar">${iniciais}</div>
-                <div class="conversa-info">
-                    <h4>${conversa.contato_nome}</h4>
-                    <p>${ultimaMensagem.substring(0, 30)}${ultimaMensagem.length > 30 ? '...' : ''}</p>
-                </div>
-                ${temNotificacao ? `<span class="badge">${conversa.nao_lidas}</span>` : ''}
+    lista.innerHTML = conversas.map(conversa => `
+        <div class="conversa-item" onclick="abrirConversa(${conversa.contato_id})">
+            <img src="${conversa.contato_foto || 'https://via.placeholder.com/50'}" 
+                 alt="${conversa.contato_nome}" 
+                 style="width: 50px; height: 50px; border-radius: 50%;">
+            <div style="flex: 1;">
+                <h4 style="margin: 0; font-size: 1rem;">${conversa.contato_nome}</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #718096;">${conversa.ultima_mensagem || 'Sem mensagens'}</p>
             </div>
-        `;
-    }).join('');
+            ${conversa.nao_lidas > 0 ? `<span class="badge">${conversa.nao_lidas}</span>` : ''}
+        </div>
+    `).join('');
 }
 
 // Formulários
@@ -524,13 +282,6 @@ function inicializarFormularios() {
     // Vincular paciente
     document.getElementById('formVincular')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        if (MODO_DEMO) {
-            alert('✅ Paciente vinculado com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
-            fecharModal('modalVincular');
-            e.target.reset();
-            return;
-        }
         
         const email = document.getElementById('emailPaciente').value;
         const observacoes = document.getElementById('observacoes').value;
@@ -560,13 +311,6 @@ function inicializarFormularios() {
     // Agendar reunião
     document.getElementById('formReuniao')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        if (MODO_DEMO) {
-            alert('✅ Reunião agendada com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
-            fecharModal('modalReuniao');
-            e.target.reset();
-            return;
-        }
         
         const dados = {
             paciente_id: document.getElementById('pacienteReuniao').value,
@@ -619,20 +363,6 @@ function fecharModal(modalId) {
 }
 
 async function carregarPacientesSelect() {
-    if (MODO_DEMO) {
-        // Usar dados demo
-        const selects = ['pacienteReuniao', 'pacienteProntuario', 'selectPacienteProntuario'];
-        selects.forEach(selectId => {
-            const select = document.getElementById(selectId);
-            if (select) {
-                select.innerHTML = '<option value="">Selecione um paciente</option>' +
-                    DADOS_DEMO.pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
-            }
-        });
-        console.log('Pacientes (select) carregados em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/especialista/pacientes`, {
             headers: {
@@ -675,14 +405,6 @@ let conversaAtiva = null;
 async function abrirConversa(contatoId) {
     conversaAtiva = contatoId;
     
-    if (MODO_DEMO) {
-        // Usar dados demo - filtrar mensagens do contato
-        const mensagensFiltradas = DADOS_DEMO.mensagens.filter(m => m.remetente_id === contatoId);
-        renderizarMensagens(mensagensFiltradas);
-        console.log('Conversa carregada em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/mensagens/conversa/${contatoId}`, {
             headers: {
@@ -705,28 +427,17 @@ function renderizarMensagens(mensagens) {
     const chatMessages = document.getElementById('chatMessages');
     
     if (mensagens.length === 0) {
-        chatMessages.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-comment-dots"></i>
-                <h3>Nenhuma mensagem ainda</h3>
-                <p>Envie a primeira mensagem para iniciar a conversa</p>
-            </div>
-        `;
+        chatMessages.innerHTML = '<p style="text-align: center; color: #718096; padding: 2rem;">Nenhuma mensagem ainda</p>';
         return;
     }
     
     chatMessages.innerHTML = mensagens.map(msg => {
         const isMine = msg.remetente_id === usuario.id;
-        const iniciais = isMine 
-            ? usuario.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-            : 'PC'; // Paciente
-        
         return `
-            <div class="chat-message ${isMine ? 'sent' : ''}">
-                <div class="message-avatar">${iniciais}</div>
+            <div class="chat-message ${isMine ? 'mine' : 'theirs'}">
                 <div class="message-content">
-                    <p>${msg.conteudo || msg.mensagem}</p>
-                    <span class="message-time">${new Date(msg.created_at || msg.criado_em).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span>
+                    <p>${msg.conteudo}</p>
+                    <span class="message-time">${new Date(msg.created_at).toLocaleString('pt-BR')}</span>
                 </div>
             </div>
         `;
@@ -739,14 +450,6 @@ async function enviarMensagem() {
     const texto = document.getElementById('mensagemTexto').value.trim();
     
     if (!texto || !conversaAtiva) return;
-    
-    if (MODO_DEMO) {
-        // Simular envio no modo demo
-        document.getElementById('mensagemTexto').value = '';
-        alert('✅ Mensagem enviada!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
-        console.log('Mensagem enviada em modo demo');
-        return;
-    }
     
     try {
         const response = await fetch(`${API_URL}/mensagens/enviar`, {
@@ -808,14 +511,6 @@ async function carregarProntuariosPaciente() {
         return;
     }
     
-    if (MODO_DEMO) {
-        // Usar dados demo - filtrar prontuários do paciente selecionado
-        const prontuariosFiltrados = DADOS_DEMO.prontuarios.filter(p => p.paciente_id == pacienteId);
-        renderizarProntuarios(prontuariosFiltrados);
-        console.log('Prontuários carregados em modo demo');
-        return;
-    }
-    
     try {
         const response = await fetch(`${API_URL}/especialista/prontuarios/${pacienteId}`, {
             headers: {
@@ -837,61 +532,29 @@ function renderizarProntuarios(prontuarios) {
     const lista = document.getElementById('prontuariosLista');
     
     if (prontuarios.length === 0) {
-        lista.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-file-medical"></i>
-                <h3>Nenhum prontuário registrado</h3>
-                <p>Clique no botão acima para criar o primeiro prontuário</p>
-            </div>
-        `;
+        lista.innerHTML = '<p style="text-align: center; color: #718096;">Nenhum prontuário registrado.</p>';
         return;
     }
     
     lista.innerHTML = prontuarios.map(p => `
-        <div class="prontuario-card">
-            <div class="prontuario-header">
-                <div class="prontuario-titulo">
-                    <h3>${p.titulo}</h3>
-                    <div class="prontuario-meta">
-                        <span><i class="fas fa-calendar"></i> ${new Date(p.created_at || p.criado_em).toLocaleDateString('pt-BR')}</span>
-                        <span><i class="fas fa-user-md"></i> ${usuario.nome}</span>
-                    </div>
+        <div class="card" style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                <div>
+                    <h3 style="margin: 0 0 0.5rem 0;">${p.titulo}</h3>
+                    <span class="badge">${p.tipo}</span>
                 </div>
-                <span class="prontuario-tipo tipo-${p.tipo}">${p.tipo}</span>
+                <span style="color: #718096; font-size: 0.9rem;">
+                    ${new Date(p.created_at).toLocaleDateString('pt-BR')}
+                </span>
             </div>
-            <div class="prontuario-conteudo">${p.conteudo}</div>
-            <div class="prontuario-actions">
-                <button class="btn-editar" onclick="editarProntuario(${p.id})">
-                    <i class="fas fa-edit"></i> Editar
-                </button>
-                <button class="btn-secondary" onclick="imprimirProntuario(${p.id})">
-                    <i class="fas fa-print"></i> Imprimir
-                </button>
-            </div>
+            <p style="white-space: pre-wrap; color: #4a5568;">${p.conteudo}</p>
         </div>
     `).join('');
-}
-
-// Editar prontuário
-function editarProntuario(prontuarioId) {
-    alert('Funcionalidade de edição em desenvolvimento');
-}
-
-// Imprimir prontuário
-function imprimirProntuario(prontuarioId) {
-    window.print();
 }
 
 // Form Prontuário
 document.getElementById('formProntuario')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    if (MODO_DEMO) {
-        alert('✅ Prontuário salvo com sucesso!\n\n(Modo demonstração - nenhuma ação foi executada no servidor)');
-        fecharModal('modalProntuario');
-        e.target.reset();
-        return;
-    }
     
     const dados = {
         paciente_id: document.getElementById('pacienteProntuario').value,

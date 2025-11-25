@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESTE - Recuperar Senha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <style>
+        .debug {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 300px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="auth-page">
+    <div class="debug" id="debug">
+        <div>Status: Carregando...</div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="logo-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h1>ConectaTEA - TESTE</h1>
+                <p>Recuperação de Senha (DEBUG)</p>
+            </div>
+
+            <!-- Etapa 1 -->
+            <div class="auth-form active" id="formSolicitarCodigo">
+                <h2>Etapa 1: Email</h2>
+                <form id="formEmail">
+                    <div class="form-group">
+                        <input type="email" id="emailRecuperacao" placeholder="seu-email@exemplo.com" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Enviar Código</button>
+                </form>
+            </div>
+
+            <!-- Etapa 2 -->
+            <div class="auth-form" id="formDigitarCodigo">
+                <h2>Etapa 2: Código</h2>
+                <p>Email: <strong id="emailEnviado"></strong></p>
+                <form id="formValidarCodigo">
+                    <div class="form-group">
+                        <input type="text" id="codigoValidacao" placeholder="000000" maxlength="6" required class="code-input">
+                    </div>
+                    <button type="submit" class="btn-auth">Continuar</button>
+                </form>
+            </div>
+
+            <!-- Etapa 3 -->
+            <div class="auth-form" id="formNovaSenha">
+                <h2>Etapa 3: Nova Senha</h2>
+                <form id="formRedefinir">
+                    <div class="form-group">
+                        <input type="password" id="novaSenha" placeholder="Nova senha" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirmarSenha" placeholder="Confirmar senha" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Redefinir</button>
+                </form>
+            </div>
+
+            <!-- Etapa 4 -->
+            <div class="auth-form" id="formSucesso">
+                <h2>✅ Sucesso!</h2>
+                <a href="login.html" class="btn-auth btn-auth-link">Fazer Login</a>
+            </div>
+
+            <div id="loadingOverlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Processando...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let emailUsuario = '';
+        let codigoValidado = '';
+
+        const debug = document.getElementById('debug');
+        function log(msg) {
+            console.log(msg);
+            const div = document.createElement('div');
+            div.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            debug.appendChild(div);
+            if (debug.children.length > 10) debug.children[0].remove();
+        }
+
+        const forms = {
+            email: document.getElementById('formSolicitarCodigo'),
+            codigo: document.getElementById('formDigitarCodigo'),
+            senha: document.getElementById('formNovaSenha'),
+            sucesso: document.getElementById('formSucesso')
+        };
+
+        log('Elementos carregados');
+        log('Form Email: ' + (forms.email ? 'OK' : 'ERRO'));
+        log('Form Código: ' + (forms.codigo ? 'OK' : 'ERRO'));
+
+        // Etapa 1
+        document.getElementById('formEmail').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            log('Submit etapa 1');
+            
+            const email = document.getElementById('emailRecuperacao').value;
+            log('Email: ' + email);
+
+            try {
+                const response = await fetch(`${API_URL}/auth/esqueci-senha`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+                log('Resposta: ' + JSON.stringify(data));
+
+                if (data.sucesso) {
+                    emailUsuario = email;
+                    document.getElementById('emailEnviado').textContent = email;
+                    
+                    log('Mudando para etapa 2...');
+                    forms.email.classList.remove('active');
+                    forms.codigo.classList.add('active');
+                    log('Etapa 2 ativa: ' + forms.codigo.classList.contains('active'));
+                } else {
+                    log('Erro: ' + data.mensagem);
+                    alert(data.mensagem);
+                }
+            } catch (error) {
+                log('Erro catch: ' + error);
+                alert('Erro: ' + error);
+            }
+        });
+
+        // Etapa 2
+        document.getElementById('formValidarCodigo').addEventListener('submit', (e) => {
+            e.preventDefault();
+            log('Submit etapa 2');
+            
+            const codigo = document.getElementById('codigoValidacao').value;
+            log('Código: ' + codigo);
+
+            if (codigo.length === 6) {
+                codigoValidado = codigo;
+                forms.codigo.classList.remove('active');
+                forms.senha.classList.add('active');
+                log('Mudou para etapa 3');
+            } else {
+                alert('Digite 6 dígitos');
+            }
+        });
+
+        // Etapa 3
+        document.getElementById('formRedefinir').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            log('Submit etapa 3');
+            
+            const novaSenha = document.getElementById('novaSenha').value;
+            const confirmar = document.getElementById('confirmarSenha').value;
+
+            if (novaSenha !== confirmar) {
+                alert('Senhas não coincidem');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/redefinir-senha`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: emailUsuario,
+                        codigo: codigoValidado,
+                        novaSenha: novaSenha
+                    })
+                });
+
+                const data = await response.json();
+                log('Resposta: ' + JSON.stringify(data));
+
+                if (data.sucesso) {
+                    forms.senha.classList.remove('active');
+                    forms.sucesso.classList.add('active');
+                    log('Sucesso!');
+                } else {
+                    alert(data.mensagem);
+                }
+            } catch (error) {
+                log('Erro: ' + error);
+                alert('Erro: ' + error);
+            }
+        });
+
+        log('Scripts carregados OK');
+    </script>
+</body>
+</html>
